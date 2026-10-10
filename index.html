@@ -1,0 +1,2387 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trợ lý AI của cô – Tiểu học (Chuẩn Thông tư 27 & Sách Kết nối tri thức)</title>
+  <style>
+    :root {
+      --primary-blue: #1e6091;
+      --primary-blue-hover: #184e77;
+      --soft-blue-bg: #e8f4f8;
+      --primary-green: #2d6a4f;
+      --primary-green-hover: #1b4332;
+      --soft-green-bg: #eaf4ec;
+      --accent-warm: #d97706;
+      --warning-bg: #fef3c7;
+      --warning-border: #f59e0b;
+      --warning-text: #92400e;
+      --danger-color: #b91c1c;
+      --text-dark: #1f2937;
+      --text-muted: #4b5563;
+      --border-color: #cbd5e1;
+      --bg-canvas: #f4f8fa;
+      --card-bg: #ffffff;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-dark);
+      background-color: var(--bg-canvas);
+      padding: 16px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 4px 24px rgba(30, 96, 145, 0.08);
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e6091 0%, #2d6a4f 100%);
+      color: #ffffff;
+      padding: 24px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 1.65rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    header p {
+      font-size: 1.02rem;
+      opacity: 0.95;
+      margin-top: 6px;
+    }
+
+    .warning-banner {
+      background-color: var(--warning-bg);
+      border-left: 6px solid var(--warning-border);
+      color: var(--warning-text);
+      padding: 14px 18px;
+      margin: 16px;
+      border-radius: var(--radius-sm);
+      font-size: 0.98rem;
+      line-height: 1.5;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-weight: 500;
+    }
+
+    .warning-icon {
+      font-size: 1.3rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .tab-navigation {
+      display: flex;
+      background-color: #f1f5f9;
+      border-bottom: 2px solid #cbd5e1;
+      padding: 0 16px;
+      overflow-x: auto;
+      gap: 6px;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      padding: 14px 20px;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    }
+
+    .tab-btn:hover {
+      color: var(--primary-blue);
+      background-color: rgba(255, 255, 255, 0.6);
+    }
+
+    .tab-btn.active {
+      color: var(--primary-blue);
+      border-bottom-color: var(--primary-blue);
+      background-color: var(--card-bg);
+    }
+
+    .tab-content {
+      display: none;
+      padding: 24px 20px;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 680px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #334155;
+      font-size: 1rem;
+    }
+
+    label .req {
+      color: var(--danger-color);
+      margin-left: 2px;
+    }
+
+    .help-hint {
+      font-size: 0.88rem;
+      color: #64748b;
+      margin-top: 4px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 1rem;
+      font-family: inherit;
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      background-color: #fff;
+      color: var(--text-dark);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 0 3px rgba(30, 96, 145, 0.15);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    /* Khung cấu hình số lượng trắc nghiệm & tự luận cho từng mức */
+    .level-config-card {
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    .level-config-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .level-tag {
+      font-weight: 700;
+      font-size: 0.98rem;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .tag-m1 { background: var(--soft-blue-bg); color: var(--primary-blue); }
+    .tag-m2 { background: var(--soft-green-bg); color: var(--primary-green); }
+    .tag-m3 { background: #fef3c7; color: var(--warning-text); }
+
+    .level-input-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    /* Khu vực tải ảnh bài học SGK */
+    .image-upload-zone {
+      border: 2px dashed #94a3b8;
+      border-radius: var(--radius-md);
+      padding: 18px;
+      text-align: center;
+      background: #f8fafc;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .image-upload-zone:hover {
+      border-color: var(--primary-blue);
+      background: #f0f7ff;
+    }
+
+    .image-preview-wrapper {
+      display: none;
+      margin-top: 12px;
+      position: relative;
+      text-align: center;
+    }
+
+    .image-preview-img {
+      max-height: 240px;
+      max-width: 100%;
+      border-radius: var(--radius-sm);
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .btn-remove-img {
+      position: absolute;
+      top: -10px;
+      right: 10px;
+      background: var(--danger-color);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      padding: 12px 22px;
+      border-radius: var(--radius-sm);
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+      min-height: 48px;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary {
+      background-color: var(--primary-blue);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(30, 96, 145, 0.25);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-blue-hover);
+    }
+
+    .btn-green {
+      background-color: var(--primary-green);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(45, 106, 79, 0.25);
+    }
+
+    .btn-green:hover {
+      background-color: var(--primary-green-hover);
+    }
+
+    .btn-secondary {
+      background-color: #f1f5f9;
+      color: #334155;
+      border: 1.5px solid #cbd5e1;
+    }
+
+    .btn-secondary:hover {
+      background-color: #e2e8f0;
+    }
+
+    .btn-danger-outline {
+      background: transparent;
+      color: var(--danger-color);
+      border: 1px solid #fca5a5;
+      padding: 6px 12px;
+      font-size: 0.9rem;
+      min-height: 38px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+    }
+
+    .btn-danger-outline:hover {
+      background: #fef2f2;
+      border-color: var(--danger-color);
+    }
+
+    .result-box-wrapper {
+      margin-top: 26px;
+      background: #ffffff;
+      border: 2px solid #0284c7;
+      border-radius: var(--radius-md);
+      padding: 20px;
+      box-shadow: 0 6px 18px rgba(2, 132, 199, 0.08);
+    }
+
+    .result-box-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding-bottom: 12px;
+      border-bottom: 1.5px solid #e2e8f0;
+    }
+
+    .result-box-title {
+      font-weight: 700;
+      color: var(--primary-blue);
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .result-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .printable-sheet {
+      background: #ffffff;
+      border: 1px dashed #94a3b8;
+      border-radius: var(--radius-sm);
+      padding: 24px;
+      font-size: 1.02rem;
+      line-height: 1.65;
+      color: #1e293b;
+    }
+
+    .sheet-head {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 2px solid #334155;
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+      font-size: 0.98rem;
+    }
+
+    .sheet-title-block {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .sheet-main-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--primary-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .sheet-subtitle {
+      font-style: italic;
+      color: #475569;
+      margin-top: 4px;
+    }
+
+    .level-section {
+      margin-bottom: 22px;
+      background: #f8fafc;
+      border-left: 4px solid var(--primary-blue);
+      padding: 14px 18px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    }
+
+    .level-section.m2 {
+      border-left-color: var(--primary-green);
+    }
+
+    .level-section.m3 {
+      border-left-color: var(--accent-warm);
+    }
+
+    .level-title {
+      font-weight: 700;
+      font-size: 1.08rem;
+      margin-bottom: 12px;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .subsection-badge {
+      display: inline-block;
+      font-size: 0.92rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+      background: #e2e8f0;
+      color: #334155;
+    }
+
+    /* Các câu trắc nghiệm A, B, C, D xuống dòng riêng biệt */
+    .mcq-question {
+      margin-bottom: 16px;
+      padding-left: 6px;
+    }
+
+    .mcq-options {
+      margin-top: 6px;
+      margin-left: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .mcq-option-line {
+      font-size: 1rem;
+      color: #334155;
+    }
+
+    /* Các câu hỏi tự luận với dòng chấm làm bài */
+    .essay-question {
+      margin-bottom: 18px;
+      padding-left: 6px;
+    }
+
+    .essay-lines-area {
+      margin-top: 8px;
+      margin-left: 6px;
+      color: #94a3b8;
+      font-family: monospace;
+      letter-spacing: 2px;
+      line-height: 1.9;
+    }
+
+    .sheet-answers-box {
+      margin-top: 24px;
+      padding: 16px;
+      background: #f0fdf4;
+      border: 1.5px solid #86efac;
+      border-radius: var(--radius-sm);
+    }
+
+    .sheet-mistakes-box {
+      margin-top: 14px;
+      padding: 16px;
+      background: #fffbeb;
+      border: 1.5px solid #fde68a;
+      border-radius: var(--radius-sm);
+    }
+
+    .student-table-container {
+      overflow-x: auto;
+      margin-bottom: 14px;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-sm);
+    }
+
+    .student-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 580px;
+      text-align: left;
+    }
+
+    .student-table th {
+      background-color: #f1f5f9;
+      color: #334155;
+      font-weight: 700;
+      padding: 10px 12px;
+      border-bottom: 1.5px solid #cbd5e1;
+      font-size: 0.95rem;
+    }
+
+    .student-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid #e2e8f0;
+      vertical-align: top;
+    }
+
+    .student-table tr:hover {
+      background-color: #fafafa;
+    }
+
+    .error-tag {
+      color: var(--danger-color);
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: none;
+      margin-top: 4px;
+    }
+
+    .error-tag.active {
+      display: block;
+    }
+
+    .feedback-cards-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .feedback-card {
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      position: relative;
+      transition: all 0.2s;
+    }
+
+    .feedback-card:hover {
+      border-color: var(--primary-blue);
+      box-shadow: 0 3px 12px rgba(30, 96, 145, 0.08);
+    }
+
+    .feedback-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .student-badge {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--primary-blue);
+      background: var(--soft-blue-bg);
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .level-badge {
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+
+    .level-good { background: #dcfce7; color: #166534; }
+    .level-pass { background: #e0f2fe; color: #075985; }
+    .level-support { background: #fee2e2; color: #991b1b; }
+
+    .feedback-text-area {
+      width: 100%;
+      min-height: 90px;
+      padding: 10px;
+      font-size: 1rem;
+      line-height: 1.6;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 6px;
+      background: #fff;
+      color: #1e293b;
+    }
+
+    .feedback-card-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background-color: #1e293b;
+      color: #fff;
+      padding: 14px 22px;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Hiệu ứng loading khi phân tích ảnh */
+    .loading-spinner-overlay {
+      display: none;
+      margin: 16px 0;
+      padding: 16px;
+      background: #eff6ff;
+      border: 1.5px solid #93c5fd;
+      border-radius: var(--radius-sm);
+      text-align: center;
+      color: #1e40af;
+      font-weight: 600;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        padding: 0;
+      }
+      .container {
+        border: none;
+        box-shadow: none;
+        max-width: 100%;
+      }
+      header, .warning-banner, .tab-navigation, form, .result-actions, .toast, .loading-spinner-overlay {
+        display: none !important;
+      }
+      .result-box-wrapper {
+        border: none !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+      }
+      .printable-sheet {
+        border: none !important;
+        padding: 0 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1><span>📚</span> Trợ lý AI của cô – Tiểu học</h1>
+      <p>Tạo Phiếu bài tập 3 mức (Chuẩn Thông tư 27 & Sách Kết nối tri thức) & Lời nhận xét</p>
+    </header>
+
+    <!-- Cảnh báo bảo mật thông tin học sinh -->
+    <div class="warning-banner" role="alert">
+      <span class="warning-icon">⚠️</span>
+      <div>
+        <strong>LƯU Ý QUAN TRỌNG:</strong> Không nhập tên thật, địa chỉ hay hoàn cảnh gia đình của học sinh. Dùng mã số (ví dụ: HS01). Mọi nội dung được tạo tự động để cô làm bản nháp tiện dụng, cô hãy đọc soát và chỉnh sửa trước khi dùng thực tế nhé.
+      </div>
+    </div>
+
+    <!-- Hệ thống chuyển Tab -->
+    <div class="tab-navigation" role="tablist">
+      <button class="tab-btn active" id="btn-tab-1" onclick="switchTab(1)" role="tab">📑 Tạo Phiếu bài tập 3 mức</button>
+      <button class="tab-btn" id="btn-tab-2" onclick="switchTab(2)" role="tab">💬 Tạo Lời nhận xét học sinh</button>
+    </div>
+
+    <div id="tab-1" class="tab-content active" role="tabpanel">
+      <form id="form-tab-1" onsubmit="event.preventDefault(); handleGenerateWorksheet();">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="ws-grade">Khối lớp <span class="req">*</span></label>
+            <select id="ws-grade">
+              <option value="1">Lớp 1</option>
+              <option value="2">Lớp 2</option>
+              <option value="3" selected>Lớp 3</option>
+              <option value="4">Lớp 4</option>
+              <option value="5">Lớp 5</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="ws-subject">Môn học <span class="req">*</span></label>
+            <select id="ws-subject" onchange="handleSubjectChange(this.value)">
+              <option value="Toán">Toán</option>
+              <option value="Tiếng Việt">Tiếng Việt</option>
+              <option value="Tin học" selected>Tin học</option>
+              <option value="Tự nhiên và Xã hội">Tự nhiên và Xã hội</option>
+              <option value="Khoa học">Khoa học</option>
+              <option value="Lịch sử và Địa lí">Lịch sử và Địa lí</option>
+              <option value="Đạo đức">Đạo đức</option>
+              <option value="Công nghệ">Công nghệ</option>
+              <option value="Tiếng Anh">Tiếng Anh</option>
+              <option value="Hoạt động trải nghiệm">Hoạt động trải nghiệm</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 4px;">
+            <label for="ws-lesson" style="margin-bottom: 0;">Tên bài học <span class="req">*</span></label>
+            <span style="font-size: 0.88rem; color: var(--primary-green); font-weight: 700;">📖 Bộ sách: Kết nối tri thức với cuộc sống</span>
+          </div>
+          <input type="text" id="ws-lesson" value="Bài 4: Bàn phím máy tính" placeholder="ví dụ: Bài 4: Bàn phím máy tính, Bài 12: Giữ vệ sinh trường học..." required style="margin-top: 6px;">
+        </div>
+
+        <div class="form-group">
+          <label for="ws-goals">Yêu cầu cần đạt của bài <span class="req">*</span></label>
+          <textarea id="ws-goals" rows="3" required>Nhận biết được khu vực phím chính, các hàng phím trên bàn phím. Biết vị trí hai phím có gai F và J trên hàng phím cơ sở. Thực hiện đặt ngón tay đúng quy định trên hàng phím cơ sở.</textarea>
+        </div>
+
+        <!-- MỤC TẢI ẢNH NỘI DUNG BÀI HỌC (SGK) - HỖ TRỢ NHIỀU TRANG -->
+        <div class="form-group">
+          <label>📷 Tải ảnh nội dung bài học (Sách giáo khoa Kết nối tri thức - Có thể tải nhiều trang):</label>
+          <div class="image-upload-zone" onclick="document.getElementById('ws-image-input').click()">
+            <input type="file" id="ws-image-input" accept="image/*" multiple style="display: none;" onchange="handleTextbookImages(event)">
+            <div id="upload-prompt-text">
+              <span style="font-size: 1.8rem;">📸</span>
+              <p style="font-weight: 600; margin-top: 4px; color: var(--primary-blue);">Bấm vào đây để tải ảnh chụp các trang bài học trong SGK (chọn 1 hoặc nhiều ảnh)</p>
+              <p class="help-hint">Cô có thể chọn nhiều trang liên tiếp. Hệ thống sẽ tiếp nhận toàn bộ các trang để xây dựng câu hỏi bám sát sách của cô.</p>
+            </div>
+            <div id="image-gallery-container" style="display: none; margin-top: 10px;" onclick="event.stopPropagation();">
+              <div id="image-gallery-grid" style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;"></div>
+              <div style="margin-top: 10px; display: flex; justify-content: center; gap: 10px; align-items: center; flex-wrap: wrap;">
+                <button type="button" class="btn btn-secondary" style="min-height: 34px; padding: 4px 12px; font-size: 0.88rem;" onclick="document.getElementById('ws-image-input').click()">➕ Thêm trang ảnh khác</button>
+                <button type="button" class="btn-danger-outline" onclick="removeAllUploadedImages(event)">🗑️ Xóa tất cả ảnh</button>
+              </div>
+              <div id="image-status-note" style="margin-top: 8px; font-weight: 600; color: var(--primary-green); font-size: 0.9rem; text-align: center;">✓ Đã nhận diện các trang sách!</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CẤU TRÚC 3 MỨC ĐỘ VỚI LỰA CHỌN TRẮC NGHIỆM VÀ TỰ LUẬN RIÊNG BIỆT -->
+        <div style="margin-bottom: 16px;">
+          <label style="margin-bottom: 10px; font-size: 1.05rem;">🎯 Cấu hình số câu hỏi từng mức (Trắc nghiệm & Tự luận):</label>
+          
+          <!-- Mức 1 -->
+          <div class="level-config-card">
+            <div class="level-config-header">
+              <span class="level-tag tag-m1">🌱 Mức 1: Nhận biết, nhắc lại kiến thức</span>
+              <span style="font-size: 0.9rem; color: #64748b;" id="m1-total-badge">Tổng: 4 câu</span>
+            </div>
+            <div class="level-input-grid">
+              <div>
+                <label for="ws-m1-mcq" style="font-size: 0.92rem; font-weight: 500;">Số câu Trắc nghiệm (A,B,C,D):</label>
+                <input type="number" id="ws-m1-mcq" value="3" min="0" max="15" onchange="updateTotalCounts()">
+              </div>
+              <div>
+                <label for="ws-m1-essay" style="font-size: 0.92rem; font-weight: 500;">Số câu Tự luận / Điền khuyết:</label>
+                <input type="number" id="ws-m1-essay" value="1" min="0" max="10" onchange="updateTotalCounts()">
+              </div>
+            </div>
+          </div>
+
+          <!-- Mức 2 -->
+          <div class="level-config-card">
+            <div class="level-config-header">
+              <span class="level-tag tag-m2">🌿 Mức 2: Kết nối, giải quyết vấn đề tương tự</span>
+              <span style="font-size: 0.9rem; color: #64748b;" id="m2-total-badge">Tổng: 3 câu</span>
+            </div>
+            <div class="level-input-grid">
+              <div>
+                <label for="ws-m2-mcq" style="font-size: 0.92rem; font-weight: 500;">Số câu Trắc nghiệm (A,B,C,D):</label>
+                <input type="number" id="ws-m2-mcq" value="2" min="0" max="15" onchange="updateTotalCounts()">
+              </div>
+              <div>
+                <label for="ws-m2-essay" style="font-size: 0.92rem; font-weight: 500;">Số câu Tự luận / Thực hành:</label>
+                <input type="number" id="ws-m2-essay" value="1" min="0" max="10" onchange="updateTotalCounts()">
+              </div>
+            </div>
+          </div>
+
+          <!-- Mức 3 -->
+          <div class="level-config-card">
+            <div class="level-config-header">
+              <span class="level-tag tag-m3">🌳 Mức 3: Vận dụng thực tế & tình huống mới</span>
+              <span style="font-size: 0.9rem; color: #64748b;" id="m3-total-badge">Tổng: 2 câu</span>
+            </div>
+            <div class="level-input-grid">
+              <div>
+                <label for="ws-m3-mcq" style="font-size: 0.92rem; font-weight: 500;">Số câu Trắc nghiệm (A,B,C,D):</label>
+                <input type="number" id="ws-m3-mcq" value="1" min="0" max="15" onchange="updateTotalCounts()">
+              </div>
+              <div>
+                <label for="ws-m3-essay" style="font-size: 0.92rem; font-weight: 500;">Số câu Tự luận / Tình huống thực tế:</label>
+                <input type="number" id="ws-m3-essay" value="1" min="0" max="10" onchange="updateTotalCounts()">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="ws-notes">Ghi chú thêm (tùy chọn)</label>
+          <input type="text" id="ws-notes" placeholder="ví dụ: Dùng thuật ngữ đúng bài trong SGK, có hình vẽ minh họa hoặc sơ đồ">
+        </div>
+
+        <!-- Trạng thái phân tích khi tải ảnh -->
+        <div id="loading-spinner-overlay" class="loading-spinner-overlay">
+          ⏳ Đang đọc nội dung trang sách và xây dựng câu hỏi bám sát sách giáo khoa Kết nối tri thức...
+        </div>
+
+        <button type="submit" id="btn-submit-worksheet" class="btn btn-primary" style="width: 100%;">
+          ⚡ Tạo trực tiếp Phiếu bài tập 3 mức (Chuẩn Thông tư 27)
+        </button>
+      </form>
+
+      <!-- Khung hiển thị Phiếu bài tập hoàn chỉnh -->
+      <div id="result-box-1" class="result-box-wrapper" style="display: none;">
+        <div class="result-box-header">
+          <span class="result-box-title">📑 Phiếu học tập đã tạo thành công</span>
+          <div class="result-actions">
+            <button class="btn btn-primary" onclick="downloadWorksheetDoc()">📥 Tải phiếu bài tập (.doc)</button>
+            <button class="btn btn-green" onclick="copyWorksheetText()">📋 Sao chép nội dung</button>
+            <button class="btn btn-secondary" onclick="window.print()">🖨️ In phiếu bài tập</button>
+          </div>
+        </div>
+
+        <div id="worksheet-preview" class="printable-sheet">
+          <!-- Nội dung phiếu được tạo động -->
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-2" class="tab-content" role="tabpanel">
+      <form id="form-tab-2" onsubmit="event.preventDefault(); renderFeedbacksDirectly();">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fb-grade">Khối lớp <span class="req">*</span></label>
+            <select id="fb-grade">
+              <option value="1">Lớp 1</option>
+              <option value="2">Lớp 2</option>
+              <option value="3" selected>Lớp 3</option>
+              <option value="4">Lớp 4</option>
+              <option value="5">Lớp 5</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="fb-subject">Môn học / Mảng nhận xét <span class="req">*</span></label>
+            <select id="fb-subject">
+              <option value="Tin học" selected>Môn Tin học</option>
+              <option value="Toán">Môn Toán</option>
+              <option value="Tiếng Việt">Môn Tiếng Việt</option>
+              <option value="Tự nhiên và Xã hội / Khoa học">Tự nhiên và Xã hội / Khoa học</option>
+              <option value="Lịch sử và Địa lí">Lịch sử và Địa lí</option>
+              <option value="Tiếng Anh">Tiếng Anh</option>
+              <option value="Công nghệ">Công nghệ</option>
+              <option value="Đạo đức">Đạo đức</option>
+              <option value="Hoạt động trải nghiệm">Hoạt động trải nghiệm</option>
+              <option value="Năng lực cốt lõi">Năng lực (Tự chủ, Giao tiếp, Giải quyết vấn đề)</option>
+              <option value="Phẩm chất">Phẩm chất (Chăm chỉ, Trung thực, Trách nhiệm, Nhân ái)</option>
+            </select>
+          </div>
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label for="fb-tone">Giọng văn nhận xét <span class="req">*</span></label>
+            <select id="fb-tone">
+              <option value="Ấm áp" selected>Ấm áp (khích lệ, gần gũi, khơi dậy niềm tin và hứng thú học tập)</option>
+              <option value="Ngắn gọn">Ngắn gọn (súc tích, rõ ý, thuận tiện ghi học bạ / sổ theo dõi)</option>
+              <option value="Trang trọng">Trang trọng (chuẩn mực ngôn ngữ sư phạm, báo cáo chuyên môn)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <label style="margin-bottom: 0;">Danh sách học sinh & Mức đạt (Thông tư 27): <span class="req">*</span></label>
+            <button type="button" class="btn btn-secondary" style="min-height: 36px; padding: 6px 14px; font-size: 0.92rem;" onclick="addStudentRow()">➕ Thêm học sinh</button>
+          </div>
+
+          <div class="student-table-container">
+            <table class="student-table">
+              <thead>
+                <tr>
+                  <th style="width: 180px;">Mã số (HS01, HS02...)</th>
+                  <th>Mức đạt được của học sinh</th>
+                  <th style="width: 90px; text-align: center;">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="student-list-body">
+                <!-- Dòng học sinh mẫu ban đầu -->
+              </tbody>
+            </table>
+          </div>
+          <div class="help-hint">💡 Lời nhận xét sẽ tự động tạo theo môn học đã chọn và mức đạt của học sinh, đảm bảo 10 lời nhận xét khác biệt nhau, không trùng lặp.</div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%;">
+          ⚡ Tạo trực tiếp Lời nhận xét theo Thông tư 27 (Tự động phân hoá, không lặp lại)
+        </button>
+      </form>
+
+      <!-- Khung hiển thị danh sách Lời nhận xét -->
+      <div id="result-box-2" class="result-box-wrapper" style="display: none;">
+        <div class="result-box-header">
+          <span class="result-box-title">💬 Lời nhận xét từng học sinh (Tự động theo môn học)</span>
+          <div class="result-actions">
+            <button class="btn btn-primary" onclick="downloadFeedbacksExcel()">📥 Tải xuống file Excel (.xls)</button>
+            <button class="btn btn-green" onclick="copyAllFeedbacks()">📋 Sao chép tất cả lời nhận xét</button>
+          </div>
+        </div>
+
+        <div id="feedback-list-container" class="feedback-cards-grid">
+          <!-- Thẻ nhận xét từng em hiển thị tại đây -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Thông báo Toast nổi -->
+  <div id="toast" class="toast">Đã thực hiện xong!</div>
+
+  <script>
+    /* Mảng lưu danh sách ảnh SGK nhiều trang */
+    let uploadedImagesList = [];
+
+    /* Hiển thị thông báo Toast */
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      if (!toast) return;
+      toast.innerText = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    /* Chuyển đổi giữa các tab */
+    function switchTab(tabIndex) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+      const activeContent = document.getElementById('tab-' + tabIndex);
+      const activeBtn = document.getElementById('btn-tab-' + tabIndex);
+      if (activeContent) activeContent.classList.add('active');
+      if (activeBtn) activeBtn.classList.add('active');
+    }
+
+    /* Cập nhật nhãn tổng số câu của từng mức */
+    function updateTotalCounts() {
+      const m1Mcq = parseInt(document.getElementById('ws-m1-mcq')?.value || 0, 10);
+      const m1Essay = parseInt(document.getElementById('ws-m1-essay')?.value || 0, 10);
+      const m2Mcq = parseInt(document.getElementById('ws-m2-mcq')?.value || 0, 10);
+      const m2Essay = parseInt(document.getElementById('ws-m2-essay')?.value || 0, 10);
+      const m3Mcq = parseInt(document.getElementById('ws-m3-mcq')?.value || 0, 10);
+      const m3Essay = parseInt(document.getElementById('ws-m3-essay')?.value || 0, 10);
+
+      const b1 = document.getElementById('m1-total-badge');
+      const b2 = document.getElementById('m2-total-badge');
+      const b3 = document.getElementById('m3-total-badge');
+
+      if (b1) b1.innerText = `Tổng: ${m1Mcq + m1Essay} câu (${m1Mcq} TN + ${m1Essay} TL)`;
+      if (b2) b2.innerText = `Tổng: ${m2Mcq + m2Essay} câu (${m2Mcq} TN + ${m2Essay} TL)`;
+      if (b3) b3.innerText = `Tổng: ${m3Mcq + m3Essay} câu (${m3Mcq} TN + ${m3Essay} TL)`;
+    }
+
+    /* Thay đổi môn học: tự điền ví dụ mẫu phù hợp sách Kết nối tri thức */
+    function handleSubjectChange(subject) {
+      const lessonInput = document.getElementById('ws-lesson');
+      const goalsInput = document.getElementById('ws-goals');
+      if (!lessonInput || !goalsInput) return;
+
+      if (subject === 'Tin học') {
+        lessonInput.value = 'Bài 4: Bàn phím máy tính';
+        goalsInput.value = 'Nhận biết được khu vực phím chính, các hàng phím trên bàn phím. Biết vị trí hai phím có gai F và J trên hàng phím cơ sở. Thực hiện đặt ngón tay đúng quy định trên hàng phím cơ sở.';
+      } else if (subject === 'Toán') {
+        lessonInput.value = 'Bài 15: Phép chia có dư';
+        goalsInput.value = 'Nhận biết phép chia có dư, số dư luôn bé hơn số chia; thực hiện được phép chia có dư trong bảng nhân, bảng chia và giải toán thực tế.';
+      } else if (subject === 'Tiếng Việt') {
+        lessonInput.value = 'Bài 8: Tạm biệt mùa hè';
+        goalsInput.value = 'Đọc trôi chảy bài đọc, nhận biết các chi tiết chính, tìm được từ chỉ cảm xúc và viết đoạn văn nêu cảm nghĩ về mùa hè.';
+      } else if (subject === 'Khoa học' || subject === 'Tự nhiên và Xã hội') {
+        lessonInput.value = 'Bài 10: Giữ vệ sinh trường học';
+        goalsInput.value = 'Nêu được các việc cần làm để giữ vệ sinh trường học; phân biệt hành động đúng sai và có ý thức tự giác bảo vệ cảnh quan trường lớp.';
+      }
+    }
+
+    /* Nén và xử lý hình ảnh chụp từ sách giáo khoa */
+    function compressAndStoreImage(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = new Image();
+          img.onload = function() {
+            const maxDim = 1280;
+            let w = img.width;
+            let h = img.height;
+            if (w > maxDim || h > maxDim) {
+              if (w > h) {
+                h = Math.round((h * maxDim) / w);
+                w = maxDim;
+              } else {
+                w = Math.round((w * maxDim) / h);
+                h = maxDim;
+              }
+            }
+            const canvas = document.createElement('canvas');
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, w, h);
+            const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.85);
+            const base64Data = compressedDataUrl.split(',')[1];
+            resolve({
+              name: file.name,
+              mimeType: 'image/jpeg',
+              dataUrl: compressedDataUrl,
+              base64Data: base64Data
+            });
+          };
+          img.onerror = function() {
+            const dataUrl = e.target.result;
+            resolve({
+              name: file.name,
+              mimeType: file.type || 'image/jpeg',
+              dataUrl: dataUrl,
+              base64Data: dataUrl.split(',')[1]
+            });
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    /* Xử lý khi cô chọn nhiều ảnh bài học SGK */
+    async function handleTextbookImages(event) {
+      const files = event.target.files;
+      if (!files || files.length === 0) return;
+
+      const prompt = document.getElementById('upload-prompt-text');
+      if (prompt) prompt.innerHTML = '<span style="font-size: 1.5rem;">⏳</span><p style="color: var(--primary-blue); font-weight:600;">Đang xử lý và đọc các trang sách...</p>';
+
+      for (const file of Array.from(files)) {
+        if (!file.type.startsWith('image/')) continue;
+        const processed = await compressAndStoreImage(file);
+        uploadedImagesList.push(processed);
+      }
+      renderImageGallery();
+      event.target.value = '';
+    }
+
+    /* Xóa 1 ảnh trong danh sách */
+    function removeSingleImage(index, event) {
+      if (event) event.stopPropagation();
+      uploadedImagesList.splice(index, 1);
+      renderImageGallery();
+    }
+
+    /* Xóa toàn bộ ảnh đã tải */
+    function removeAllUploadedImages(event) {
+      if (event) event.stopPropagation();
+      uploadedImagesList = [];
+      renderImageGallery();
+      showToast('Đã xóa tất cả ảnh trang sách!');
+    }
+
+    /* Hiển thị danh sách ảnh xem trước */
+    function renderImageGallery() {
+      const container = document.getElementById('image-gallery-container');
+      const grid = document.getElementById('image-gallery-grid');
+      const prompt = document.getElementById('upload-prompt-text');
+      const statusNote = document.getElementById('image-status-note');
+
+      if (!container || !grid || !prompt) return;
+
+      if (uploadedImagesList.length === 0) {
+        container.style.display = 'none';
+        prompt.style.display = 'block';
+        prompt.innerHTML = `
+          <span style="font-size: 1.8rem;">📸</span>
+          <p style="font-weight: 600; margin-top: 4px; color: var(--primary-blue);">Bấm vào đây để tải ảnh chụp các trang bài học trong SGK (chọn 1 hoặc nhiều ảnh)</p>
+          <p class="help-hint">Cô có thể chọn nhiều trang liên tiếp. Trợ lý AI sẽ đọc kỹ từng trang để đặt câu hỏi chuẩn xác.</p>
+        `;
+        return;
+      }
+
+      prompt.style.display = 'none';
+      container.style.display = 'block';
+      grid.innerHTML = '';
+
+      uploadedImagesList.forEach((img, idx) => {
+        const item = document.createElement('div');
+        item.style.position = 'relative';
+        item.style.width = '88px';
+        item.style.height = '112px';
+        item.style.borderRadius = '8px';
+        item.style.overflow = 'hidden';
+        item.style.border = '1.5px solid #cbd5e1';
+        item.style.boxShadow = '0 2px 6px rgba(0,0,0,0.1)';
+        item.style.background = '#fff';
+
+        item.innerHTML = `
+          <img src="${img.dataUrl}" alt="Trang ${idx + 1}" style="width: 100%; height: 100%; object-fit: cover;">
+          <span style="position: absolute; bottom: 2px; left: 2px; background: rgba(15, 23, 42, 0.75); color: #fff; font-size: 11px; font-weight: 600; padding: 1px 5px; border-radius: 4px;">Trang ${idx + 1}</span>
+          <button type="button" onclick="removeSingleImage(${idx}, event)" title="Xóa trang này" style="position: absolute; top: 2px; right: 2px; background: rgba(185, 28, 28, 0.88); color: #fff; border: none; border-radius: 50%; width: 22px; height: 22px; cursor: pointer; font-size: 11px; font-weight: bold; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,0.3);">✕</button>
+        `;
+        grid.appendChild(item);
+      });
+
+      if (statusNote) {
+        statusNote.innerText = `✓ Đã nhận ${uploadedImagesList.length} trang sách! AI sẽ phân tích toàn bộ nội dung từ các trang này.`;
+      }
+      showToast(`Đã nhận ${uploadedImagesList.length} trang sách!`);
+    }
+
+    /* Gọi mô hình AI Gemini phân tích ảnh SGK và yêu cầu cần đạt */
+    async function callGeminiWorksheetAPI(grade, subject, lesson, goals, notes, counts, images) {
+      const apiKey = "";
+      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+      const systemPrompt = `Bạn là một chuyên gia sư phạm tiểu học và giáo viên cốt cán giảng dạy bộ sách "Kết nối tri thức với cuộc sống", am hiểu sâu sắc Chương trình GDPT 2018 và Thông tư 27/2020/TT-BGDĐT.
+Nhiệm vụ trọng tâm của bạn là:
+1. ĐỌC KỸ VÀ KHAI THÁC 100% nội dung từ tất cả các trang ảnh sách giáo khoa được cung cấp (nếu có ảnh). Trích xuất chính xác thuật ngữ, câu từ, số liệu, bài toán, hình vẽ, ví dụ thực tế trong các trang sách này.
+2. BÁM SÁT CHÍNH XÁC YÊU CẦU CẦN ĐẠT do giáo viên đưa ra: "${goals}". Mọi câu hỏi phải phục vụ trực tiếp cho yêu cầu cần đạt này, tuyệt đối không đặt câu hỏi xa rời bài học.
+3. Phân hoá chuẩn mực 3 Mức theo Thông tư 27:
+   - Mức 1 (Nhận biết, nhắc lại): Các câu hỏi trắc nghiệm A, B, C, D rõ ràng, bám sát định nghĩa/kiến thức trực tiếp từ bài học và ảnh sách. Phần tự luận là điền từ hoặc nêu lại kiến thức cơ bản.
+   - Mức 2 (Kết nối, giải quyết vấn đề tương tự): Vận dụng trực tiếp các bước làm, bài tập tương tự phần Luyện tập trong SGK.
+   - Mức 3 (Vận dụng vào tình huống mới/thực tế): Vận dụng giải quyết tình huống thực tế đời sống, tình huống mới phù hợp tâm lý học sinh tiểu học.
+4. Đảm bảo đúng số lượng câu hỏi trắc nghiệm và tự luận được yêu cầu. Mỗi câu trắc nghiệm bắt buộc có 4 lựa chọn có dạng: "A. ...", "B. ...", "C. ...", "D. ...".
+5. Cung cấp đáp án tham khảo chuẩn xác và 2-3 lỗi sai học sinh hay mắc phải kèm giải thích.`;
+
+      const userQuery = `Hãy biên soạn Phiếu bài tập 3 mức độ bám sát SGK Kết nối tri thức:
+- Khối lớp: Lớp ${grade}
+- Môn học: ${subject}
+- Bộ sách: Kết nối tri thức với cuộc sống
+- Tên bài học: ${lesson}
+- YÊU CẦU CẦN ĐẠT BẮT BUỘC BÁM SÁT: ${goals}
+${notes ? `- Ghi chú thêm của giáo viên: ${notes}` : ''}
+${images.length > 0 ? `- ĐÃ ĐÍNH KÈM ${images.length} TRANG ẢNH CHỤP SGK: Bạn hãy quan sát kỹ từng hình ảnh, các bài tập, sơ đồ, bảng biểu trong ảnh để đưa vào câu hỏi!` : ''}
+
+SỐ LƯỢNG CÂU HỎI CẦN TẠO:
+- Mức 1: Tạo đúng ${counts.m1Mcq} câu Trắc nghiệm (A, B, C, D) và ${counts.m1Essay} câu Tự luận.
+- Mức 2: Tạo đúng ${counts.m2Mcq} câu Trắc nghiệm (A, B, C, D) và ${counts.m2Essay} câu Tự luận.
+- Mức 3: Tạo đúng ${counts.m3Mcq} câu Trắc nghiệm (A, B, C, D) và ${counts.m3Essay} câu Tự luận.`;
+
+      const parts = [{ text: userQuery }];
+
+      images.forEach(img => {
+        parts.push({
+          inlineData: {
+            mimeType: img.mimeType || 'image/jpeg',
+            data: img.base64Data
+          }
+        });
+      });
+
+      const payload = {
+        contents: [{ role: "user", parts: parts }],
+        systemInstruction: { parts: [{ text: systemPrompt }] },
+        generationConfig: {
+          responseMimeType: "application/json",
+          responseSchema: {
+            type: "OBJECT",
+            properties: {
+              m1: {
+                type: "OBJECT",
+                properties: {
+                  mcq: {
+                    type: "ARRAY",
+                    items: {
+                      type: "OBJECT",
+                      properties: {
+                        q: { type: "STRING" },
+                        options: {
+                          type: "ARRAY",
+                          items: { type: "STRING" }
+                        }
+                      },
+                      required: ["q", "options"]
+                    }
+                  },
+                  essay: {
+                    type: "ARRAY",
+                    items: { type: "STRING" }
+                  }
+                },
+                required: ["mcq", "essay"]
+              },
+              m2: {
+                type: "OBJECT",
+                properties: {
+                  mcq: {
+                    type: "ARRAY",
+                    items: {
+                      type: "OBJECT",
+                      properties: {
+                        q: { type: "STRING" },
+                        options: {
+                          type: "ARRAY",
+                          items: { type: "STRING" }
+                        }
+                      },
+                      required: ["q", "options"]
+                    }
+                  },
+                  essay: {
+                    type: "ARRAY",
+                    items: { type: "STRING" }
+                  }
+                },
+                required: ["mcq", "essay"]
+              },
+              m3: {
+                type: "OBJECT",
+                properties: {
+                  mcq: {
+                    type: "ARRAY",
+                    items: {
+                      type: "OBJECT",
+                      properties: {
+                        q: { type: "STRING" },
+                        options: {
+                          type: "ARRAY",
+                          items: { type: "STRING" }
+                        }
+                      },
+                      required: ["q", "options"]
+                    }
+                  },
+                  essay: {
+                    type: "ARRAY",
+                    items: { type: "STRING" }
+                  }
+                },
+                required: ["mcq", "essay"]
+              },
+              answers: {
+                type: "ARRAY",
+                items: { type: "STRING" }
+              },
+              mistakes: {
+                type: "ARRAY",
+                items: { type: "STRING" }
+              }
+            },
+            required: ["m1", "m2", "m3", "answers", "mistakes"]
+          }
+        }
+      };
+
+      let retries = 3;
+      let delay = 1000;
+      for (let attempt = 0; attempt < retries; attempt++) {
+        try {
+          const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+          const result = await response.json();
+          const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (text) {
+            return JSON.parse(text);
+          }
+          throw new Error("Không nhận được dữ liệu hợp lệ từ AI");
+        } catch (err) {
+          if (attempt === retries - 1) {
+            throw err;
+          }
+          await new Promise(r => setTimeout(r, delay));
+          delay *= 2;
+        }
+      }
+    }
+
+    /* Ngân hàng câu hỏi chi tiết bám chuẩn sách giáo khoa Kết nối tri thức dự phòng */
+    function getCurriculumExercises(grade, subject, lesson, goals, counts) {
+      const cleanLesson = lesson || "Bài học trọng tâm";
+      let m1_mcq = [], m1_essay = [];
+      let m2_mcq = [], m2_essay = [];
+      let m3_mcq = [], m3_essay = [];
+      let answers = [];
+      let mistakes = [];
+
+      if (subject === "Tin học") {
+        m1_mcq = [
+          {
+            q: `Trên bàn phím máy tính (sách Tin học Kết nối tri thức), hai phím nào dưới đây có gờ nhô lên (phím có gai)?`,
+            options: [
+              `A. Phím F và phím J`,
+              `B. Phím G và phím H`,
+              `C. Phím A và phím L`,
+              `D. Phím D và phím K`
+            ]
+          },
+          {
+            q: `Hàng phím chứa hai phím có gai F và J được gọi là hàng phím gì?`,
+            options: [
+              `A. Hàng phím số`,
+              `B. Hàng phím trên`,
+              `C. Hàng phím cơ sở`,
+              `D. Hàng phím dưới`
+            ]
+          },
+          {
+            q: `Phím dài nhất nằm ở hàng phím dưới cùng của bàn phím là phím nào?`,
+            options: [
+              `A. Phím Enter`,
+              `B. Phím Shift`,
+              `C. Phím cách (Space bar)`,
+              `D. Phím Caps Lock`
+            ]
+          },
+          {
+            q: `Trong phần mềm quản lý tệp, biểu tượng thư mục thường có màu gì?`,
+            options: [
+              `A. Màu vàng`,
+              `B. Màu xanh lá`,
+              `C. Màu đỏ`,
+              `D. Màu tím`
+            ]
+          },
+          {
+            q: `Khi gõ bàn phím bằng 10 ngón tay, hai ngón tay trỏ của bàn tay trái và bàn tay phải đặt vào hai phím nào ở tư thế xuất phát?`,
+            options: [
+              `A. Phím F (tay trái) và phím J (tay phải)`,
+              `B. Phím A (tay trái) và phím L (tay phải)`,
+              `C. Phím S (tay trái) và phím K (tay phải)`,
+              `D. Phím D (tay trái) và phím K (tay phải)`
+            ]
+          }
+        ];
+
+        m1_essay = [
+          `Em hãy quan sát bàn phím máy tính và kể tên lần lượt 5 hàng phím chính từ trên xuống dưới theo nội dung sách Tin học Kết nối tri thức.`,
+          `Hãy nêu tên hai phím có gai trên hàng phím cơ sở và giải thích vì sao hai phím này lại có đặc điểm nổi bật như vậy.`,
+          `Điền vào chỗ trống: Hai ngón tay cái luôn đặt hờ trên phím .................................. để tạo khoảng cách giữa các từ khi gõ văn bản.`
+        ];
+
+        m2_mcq = [
+          {
+            q: `Để gõ từ "TIN HỌC", em cần dùng ngón tay nào để gõ phím T nằm ở hàng phím trên?`,
+            options: [
+              `A. Ngón trỏ của bàn tay trái`,
+              `B. Ngón trỏ của bàn tay phải`,
+              `C. Ngón giữa của bàn tay trái`,
+              `D. Ngón út của bàn tay phải`
+            ]
+          },
+          {
+            q: `Hành động nào dưới đây là ĐÚNG khi sử dụng máy tính trong phòng thực hành Tin học?`,
+            options: [
+              `A. Gõ phím nhẹ nhàng, dứt khoát và ngồi thẳng lưng`,
+              `B. Đập mạnh tay vào bàn phím khi máy tính chạy chậm`,
+              `C. Vừa ăn bánh vừa gõ phím`,
+              `D. Tự ý rút dây cắm bàn phím ra khỏi máy tính`
+            ]
+          },
+          {
+            q: `Trong cấu trúc thư mục dạng cây, thư mục nằm bên trong một thư mục khác được gọi là:`,
+            options: [
+              `A. Thư mục con`,
+              `B. Thư mục mẹ`,
+              `C. Tệp tin gốc`,
+              `D. Ổ đĩa hệ thống`
+            ]
+          }
+        ];
+
+        m2_essay = [
+          `Em hãy mô tả tư thế ngồi chuẩn khi sử dụng máy tính (khoảng cách mắt đến màn hình, tư thế lưng và vị trí cổ tay) để bảo vệ sức khỏe học đường.`,
+          `Nếu muốn lưu bài trình chiếu hoặc bức tranh vừa vẽ vào thư mục "LOP 3A" trên ổ đĩa D, em hãy nêu thứ tự 3 bước thực hiện cơ bản.`,
+          `Giải thích vì sao việc luyện gõ bàn phím bằng 10 ngón đúng vị trí lại giúp em gõ nhanh và không bị mỏi tay.`
+        ];
+
+        m3_mcq = [
+          {
+            q: `Khi nhận được một thông tin chưa rõ nguồn gốc hoặc tin nhắn lạ trên Internet yêu cầu cung cấp họ tên và số điện thoại của bố mẹ, em nên làm gì?`,
+            options: [
+              `A. Tuyệt đối không cung cấp thông tin và báo ngay cho bố mẹ hoặc thầy cô`,
+              `B. Gửi ngay thông tin để nhận quà tặng`,
+              `C. Chuyển tiếp tin nhắn cho các bạn cùng lớp`,
+              `D. Tự ý trả lời tin nhắn và làm theo yêu cầu`
+            ]
+          },
+          {
+            q: `Để tìm kiếm tài liệu phục vụ bài học Tin học về "Bảo vệ máy tính" trên Internet một cách an toàn, từ khóa nào sau đây là phù hợp nhất?`,
+            options: [
+              `A. Cách sử dụng máy tính an toàn cho học sinh tiểu học`,
+              `B. Tải game miễn phí không cần mật khẩu`,
+              `C. Bí mật phòng máy tính`,
+              `D. Xem phim hoạt hình mới nhất`
+            ]
+          }
+        ];
+
+        m3_essay = [
+          `Tình huống thực tế: Bạn Minh có thói quen vừa gõ bàn phím vừa nhìn chằm chằm xuống từng phím và dùng một ngón tay trỏ để "mổ cò". Em hãy viết 2-3 câu khuyên và hướng dẫn bạn cách sửa thói quen này để gõ phím nhanh và khoa học hơn.`,
+          `Em hãy đề xuất sơ đồ tổ chức thư mục trên máy tính gồm: 1 thư mục chính mang tên em, bên trong có 3 thư mục con tương ứng với các môn học (Toán, Tiếng Việt, Tin học) để lưu trữ các bài tập đã làm.`
+        ];
+
+        answers = [
+          `Mức 1 - Trắc nghiệm: 1: A (Phím F và J) | 2: C (Hàng phím cơ sở) | 3: C (Phím cách) | 4: A (Màu vàng) | 5: A (Ngón trỏ trái vào F, ngón trỏ phải vào J).`,
+          `Mức 1 - Tự luận: 5 hàng phím chính gồm: Hàng phím số, Hàng phím trên, Hàng phím cơ sở, Hàng phím dưới, Hàng phím chứa phím cách. Hai phím F và J có gờ để làm mốc định vị cho 2 ngón tay trỏ mà không cần nhìn xuống bàn phím.`,
+          `Mức 2 - Trắc nghiệm: 1: A (Ngón trỏ trái) | 2: A (Gõ nhẹ nhàng, ngồi thẳng lưng) | 3: A (Thư mục con).`,
+          `Mức 2 - Tự luận: Tư thế chuẩn: Lưng thẳng, mắt cách màn hình từ 50-80cm, mắt ngang tầm cạnh trên màn hình, cổ tay thả lỏng đặt ngang tầm bàn phím.`,
+          `Mức 3 - Trắc nghiệm: 1: A (Không cung cấp và báo ngay cho người lớn) | 2: A.`,
+          `Mức 3 - Tự luận: Lời khuyên cho bạn Minh: Đặt 8 ngón tay lên các phím xuất phát ở hàng phím cơ sở (A S D F và J K L ;), mắt nhìn màn hình, tập gõ từng ngón đúng hàng phím quy định.`
+        ];
+
+        mistakes = [
+          `Học sinh hay nhầm lẫn giữa hàng phím cơ sở và hàng phím trên, đặt nhầm ngón trỏ sang phím G và H.`,
+          `Dùng ngón tay tùy tiện để gõ phím thay vì gõ đúng ngón phụ trách theo phân công chuẩn SGK.`,
+          `Quên đưa ngón tay về hàng phím cơ sở sau khi vươn lên gõ các phím ở hàng trên hoặc hàng dưới.`
+        ];
+      } else if (subject === "Toán") {
+        m1_mcq = [
+          {
+            q: `Trong phép chia có dư, khẳng định nào sau đây luôn luôn ĐÚNG?`,
+            options: [
+              `A. Số dư luôn bé hơn số chia`,
+              `B. Số dư luôn lớn hơn số chia`,
+              `C. Số dư luôn bằng số chia`,
+              `D. Số dư có thể lớn hơn số bị chia`
+            ]
+          },
+          {
+            q: `Thực hiện phép tính 19 : 4, ta được thương và số dư lần lượt là:`,
+            options: [
+              `A. Thương là 4, số dư là 3`,
+              `B. Thương là 4, số dư là 1`,
+              `C. Thương là 3, số dư là 7`,
+              `D. Thương là 5, số dư là 1`
+            ]
+          },
+          {
+            q: `Trong phép chia cho 5, số dư lớn nhất có thể có là:`,
+            options: [
+              `A. 4`,
+              `B. 5`,
+              `C. 6`,
+              `D. 3`
+            ]
+          },
+          {
+            q: `Số bị chia là bao nhiêu nếu số chia là 6, thương là 5 và số dư là 2?`,
+            options: [
+              `A. 32`,
+              `B. 30`,
+              `C. 35`,
+              `D. 28`
+            ]
+          }
+        ];
+
+        m1_essay = [
+          `Đặt tính rồi tính: a) 27 : 4 &emsp;&emsp; b) 43 : 6 &emsp;&emsp; c) 58 : 7.`,
+          `Điền số thích hợp vào chỗ chấm: Trong phép chia có số chia là 8, các số dư có thể có là: ........................................................................`,
+          `Tìm x biết: x : 5 = 6 (dư 3).`
+        ];
+
+        m2_mcq = [
+          {
+            q: `Một lớp học có 33 học sinh. Cô giáo chia các bạn thành các nhóm, mỗi nhóm có 4 học sinh. Hỏi chia được nhiều nhất bao nhiêu nhóm và còn thừa mấy bạn?`,
+            options: [
+              `A. 8 nhóm và thừa 1 bạn`,
+              `B. 7 nhóm và thừa 5 bạn`,
+              `C. 8 nhóm và thừa 2 bạn`,
+              `D. 9 nhóm và thừa 1 bạn`
+            ]
+          },
+          {
+            q: `Phép tính nào dưới đây có cùng số dư với phép tính 38 : 5?`,
+            options: [
+              `A. 27 : 8 (dư 3)`,
+              `B. 19 : 4 (dư 3)`,
+              `C. 23 : 5 (dư 3)`,
+              `D. Cả ba phép tính trên đều đúng`
+            ]
+          }
+        ];
+
+        m2_essay = [
+          `Bác An có 45 kg gạo chia đều vào các túi, mỗi túi chứa 6 kg. Hỏi bác An đóng được nhiều nhất bao nhiêu túi gạo và còn thừa mấy ki-lô-gam gạo?`,
+          `Tính giá trị của biểu thức: 125 + (47 : 5 lấy số dư nhân với 10).`
+        ];
+
+        m3_mcq = [
+          {
+            q: `Một đoàn gồm 29 du khách muốn đi thuyền qua sông. Mỗi chuyến thuyền chở được nhiều nhất 5 du khách. Hỏi cần ít nhất bao nhiêu chuyến thuyền để chở hết số du khách đó?`,
+            options: [
+              `A. 6 chuyến`,
+              `B. 5 chuyến`,
+              `C. 7 chuyến`,
+              `D. 4 chuyến`
+            ]
+          }
+        ];
+
+        m3_essay = [
+          `Bài toán thực tế: Bác Ba có 46 quả bưởi cần xếp vào các thùng để vận chuyển, mỗi thùng chỉ xếp được tối đa 6 quả. Hỏi bác Ba cần chuẩn bị ít nhất bao nhiêu chiếc thùng để xếp hết số bưởi trên? (Giải thích chi tiết vì sao).`,
+          `Thử thách tư duy: Tìm một số có hai chữ số, biết rằng số đó chia cho 7 thì được thương là 8 và có số dư là số dư lớn nhất có thể có.`
+        ];
+
+        answers = [
+          `Mức 1: Trắc nghiệm: 1: A | 2: A (19:4 = 4 dư 3) | 3: A (số dư lớn nhất là 4) | 4: A (6x5+2=32). Tự luận: 27:4 = 6 dư 3; 43:6 = 7 dư 1; 58:7 = 8 dư 2. Số dư có thể có: 0, 1, 2, 3, 4, 5, 6, 7.`,
+          `Mức 2: Trắc nghiệm: 1: A (33:4 = 8 dư 1) | 2: D. Tự luận: 45:6 = 7 (dư 3kg gạo).`,
+          `Mức 3: Trắc nghiệm: 1: A (29:5 = 5 dư 4 người -> cần ít nhất 5+1 = 6 chuyến). Tự luận: Bài bưởi: 46:6 = 7 dư 4 quả -> vì còn thừa 4 quả nên cần thêm 1 thùng nữa, vậy bác Ba cần ít nhất 7+1 = 8 thùng. Số cần tìm: số dư lớn nhất khi chia cho 7 là 6 -> Số đó là: 7 x 8 + 6 = 62.`
+        ];
+
+        mistakes = [
+          `Ước lượng thương chưa sát dẫn đến số dư lớn hơn hoặc bằng số chia.`,
+          `Ở bài toán thực tế xếp thùng/chuyến thuyền: quên cộng thêm 1 đơn vị cho lượng dư còn lại.`,
+          `Nhầm quy tắc: lấy thương cộng số dư rồi mới nhân số chia.`
+        ];
+      } else {
+        m1_mcq = [
+          {
+            q: `Dựa vào nội dung bài học "${cleanLesson}" (sách Kết nối tri thức), khẳng định nào sau đây là ĐÚNG?`,
+            options: [
+              `A. Nắm vững khái niệm, hiện tượng và quy tắc trọng tâm của bài`,
+              `B. Thực hiện chưa đầy đủ các bước theo bài học`,
+              `C. Bỏ qua các chi tiết và yêu cầu quan trọng`,
+              `D. Không cần ghi nhớ kiến thức chính`
+            ]
+          },
+          {
+            q: `Hành động hoặc phát biểu nào sau đây phù hợp nhất với nội dung bài "${cleanLesson}"?`,
+            options: [
+              `A. Chủ động, tự giác và tuân thủ đúng yêu cầu bài học`,
+              `B. Chờ đợi người khác làm giúp`,
+              `C. Chỉ thực hiện khi có người nhắc nhở`,
+              `D. Không quan tâm đến kết quả`
+            ]
+          }
+        ];
+
+        m1_essay = [
+          `Em hãy nêu lại 2 ý chính quan trọng nhất trong bài học "${cleanLesson}" (sách Kết nối tri thức).`,
+          `Điền từ thích hợp vào chỗ chấm để hoàn thành quy tắc bài học: Khi thực hiện bài học "${cleanLesson}", chúng ta cần luôn .........................................`
+        ];
+
+        m2_mcq = [
+          {
+            q: `Khi gặp tình huống tương tự như bài học "${cleanLesson}", thứ tự giải quyết đúng là:`,
+            options: [
+              `A. Quan sát -> Suy nghĩ -> Lựa chọn cách làm đúng -> Kiểm tra lại`,
+              `B. Làm ngay không cần suy nghĩ`,
+              `C. Bỏ qua tình huống`,
+              `D. Làm theo bạn bè dù bạn làm sai`
+            ]
+          }
+        ];
+
+        m2_essay = [
+          `Vận dụng kiến thức bài học "${cleanLesson}", em hãy nêu cách giải quyết cho một tình huống tương tự mà em đã gặp ở trường.`,
+          `Hãy đặt 1 câu văn hoàn chỉnh có sử dụng từ ngữ trọng tâm của bài học hôm nay.`
+        ];
+
+        m3_mcq = [
+          {
+            q: `Ý nghĩa lớn nhất của việc vận dụng bài học "${cleanLesson}" vào cuộc sống hàng ngày là gì?`,
+            options: [
+              `A. Giúp bản thân hình thành thói quen tốt và giúp ích cho mọi người`,
+              `B. Chỉ để được điểm cao trên lớp`,
+              `C. Không có ý nghĩa thực tế`,
+              `D. Chỉ để hoàn thành nhiệm vụ thầy cô giao`
+            ]
+          }
+        ];
+
+        m3_essay = [
+          `Em hãy viết một đoạn văn ngắn (3-4 câu) kể lại việc em đã vận dụng bài học "${cleanLesson}" vào thực tế tại gia đình hoặc trường học của mình.`,
+          `Đóng vai một tuyên truyền viên nhí, em hãy nêu 2 lời khuyên gửi tới các bạn cùng lớp để thực hiện tốt nội dung bài học này.`
+        ];
+
+        answers = [
+          `Mức 1: Trắc nghiệm: 1: A | 2: A. Tự luận: Nêu đúng 2 nội dung trọng tâm trong sách Kết nối tri thức.`,
+          `Mức 2: Trắc nghiệm: 1: A. Tự luận: Nêu được quy trình giải quyết hợp lí, câu văn đủ chủ ngữ - vị ngữ.`,
+          `Mức 3: Trắc nghiệm: 1: A. Tự luận: Đoạn văn mạch lạc, cảm xúc chân thực, nêu việc làm cụ thể.`
+        ];
+
+        mistakes = [
+          `Học sinh trả lời còn chung chung, chưa gắn liền với nội dung bài học sách Kết nối tri thức.`,
+          `Viết câu tự luận thiếu chủ ngữ hoặc chưa đặt dấu chấm kết thúc câu.`
+        ];
+      }
+
+      function pickOrExtendMCQ(arr, count, prefix) {
+        let res = [];
+        for (let i = 0; i < count; i++) {
+          if (arr[i]) {
+            res.push(arr[i]);
+          } else {
+            res.push({
+              q: `Câu hỏi trắc nghiệm ${i + 1} (${prefix} - Bài "${cleanLesson}"): Khẳng định nào sau đây là chính xác theo SGK Kết nối tri thức?`,
+              options: [
+                `A. Phương án chính xác theo nội dung bài học`,
+                `B. Phương án chưa đầy đủ theo bài học`,
+                `C. Phương án trái ngược với quy tắc đã học`,
+                `D. Phương án không liên quan đến bài học`
+              ]
+            });
+          }
+        }
+        return res;
+      }
+
+      function pickOrExtendEssay(arr, count, prefix) {
+        let res = [];
+        for (let i = 0; i < count; i++) {
+          if (arr[i]) {
+            res.push(arr[i]);
+          } else {
+            res.push(`Bài tập tự luận ${i + 1} (${prefix}): Dựa vào nội dung bài "${cleanLesson}" trong SGK Kết nối tri thức, em hãy trình bày câu trả lời hoặc cách giải quyết tương ứng.`);
+          }
+        }
+        return res;
+      }
+
+      return {
+        m1: {
+          mcq: pickOrExtendMCQ(m1_mcq, counts.m1Mcq, "Mức 1"),
+          essay: pickOrExtendEssay(m1_essay, counts.m1Essay, "Mức 1")
+        },
+        m2: {
+          mcq: pickOrExtendMCQ(m2_mcq, counts.m2Mcq, "Mức 2"),
+          essay: pickOrExtendEssay(m2_essay, counts.m2Essay, "Mức 2")
+        },
+        m3: {
+          mcq: pickOrExtendMCQ(m3_mcq, counts.m3Mcq, "Mức 3"),
+          essay: pickOrExtendEssay(m3_essay, counts.m3Essay, "Mức 3")
+        },
+        answers: answers,
+        mistakes: mistakes
+      };
+    }
+
+    /* Xử lý tạo Phiếu bài tập thông minh với AI */
+    async function handleGenerateWorksheet() {
+      const grade = document.getElementById('ws-grade').value;
+      const subject = document.getElementById('ws-subject').value;
+      const lesson = document.getElementById('ws-lesson').value.trim();
+      const goals = document.getElementById('ws-goals').value.trim();
+      const notes = document.getElementById('ws-notes').value.trim();
+
+      const counts = {
+        m1Mcq: parseInt(document.getElementById('ws-m1-mcq')?.value || 0, 10),
+        m1Essay: parseInt(document.getElementById('ws-m1-essay')?.value || 0, 10),
+        m2Mcq: parseInt(document.getElementById('ws-m2-mcq')?.value || 0, 10),
+        m2Essay: parseInt(document.getElementById('ws-m2-essay')?.value || 0, 10),
+        m3Mcq: parseInt(document.getElementById('ws-m3-mcq')?.value || 0, 10),
+        m3Essay: parseInt(document.getElementById('ws-m3-essay')?.value || 0, 10)
+      };
+
+      if (!lesson || !goals) {
+        showToast('Cô vui lòng nhập Tên bài học và Yêu cầu cần đạt nhé!');
+        return;
+      }
+
+      const spinner = document.getElementById('loading-spinner-overlay');
+      const submitBtn = document.getElementById('btn-submit-worksheet');
+
+      if (submitBtn) submitBtn.disabled = true;
+      if (spinner) {
+        if (uploadedImagesList.length > 0) {
+          spinner.innerText = `⏳ AI đang đọc chi tiết ${uploadedImagesList.length} trang sách SGK và biên soạn câu hỏi bám sát Yêu cầu cần đạt...`;
+        } else {
+          spinner.innerText = `⏳ AI đang phân tích Yêu cầu cần đạt của bài học và tạo câu hỏi bám sát chuẩn kiến thức SGK...`;
+        }
+        spinner.style.display = 'block';
+      }
+
+      let generatedData = null;
+
+      try {
+        generatedData = await callGeminiWorksheetAPI(grade, subject, lesson, goals, notes, counts, uploadedImagesList);
+        showToast('AI đã tạo câu hỏi bám sát ảnh sách và yêu cầu cần đạt!');
+      } catch (error) {
+        console.error("Lỗi khi gọi AI:", error);
+        generatedData = getCurriculumExercises(grade, subject, lesson, goals, counts);
+        showToast('Đang hiển thị đề bài mẫu phù hợp với môn học và khối lớp.');
+      } finally {
+        if (spinner) spinner.style.display = 'none';
+        if (submitBtn) submitBtn.disabled = false;
+      }
+
+      renderWorksheetHtml(grade, subject, lesson, goals, notes, generatedData);
+    }
+
+    /* Hiển thị Phiếu học tập lên giao diện xem trước */
+    function renderWorksheetHtml(grade, subject, lesson, goals, notes, data) {
+      let qIndex = 1;
+
+      // Hàm vẽ nhóm câu hỏi của 1 mức (gồm cả trắc nghiệm và tự luận)
+      function renderLevelQuestions(levelObj, levelTitle, levelClass, badgeText) {
+        const hasMcq = levelObj.mcq && levelObj.mcq.length > 0;
+        const hasEssay = levelObj.essay && levelObj.essay.length > 0;
+
+        if (!hasMcq && !hasEssay) return '';
+
+        let contentHtml = `
+          <div class="level-section ${levelClass}">
+            <div class="level-title">${levelTitle}</div>
+        `;
+
+        if (hasMcq) {
+          contentHtml += `
+            <div class="subsection-badge">A. PHẦN TRẮC NGHIỆM (${levelObj.mcq.length} câu)</div>
+            <div style="font-size: 0.95rem; font-style: italic; color: #475569; margin-bottom: 8px;">Khoanh tròn vào chữ cái (A, B, C hoặc D) đặt trước câu trả lời đúng nhất:</div>
+          `;
+          levelObj.mcq.forEach(item => {
+            contentHtml += `
+              <div class="mcq-question">
+                <strong>Câu ${qIndex}:</strong> ${item.q}
+                <div class="mcq-options">
+                  ${item.options.map(opt => `<div class="mcq-option-line">${opt}</div>`).join('')}
+                </div>
+              </div>
+            `;
+            qIndex++;
+          });
+        }
+
+        if (hasEssay) {
+          contentHtml += `
+            <div class="subsection-badge" style="margin-top: 10px;">B. PHẦN TỰ LUẬN / THỰC HÀNH (${levelObj.essay.length} câu)</div>
+          `;
+          levelObj.essay.forEach(item => {
+            contentHtml += `
+              <div class="essay-question">
+                <strong>Câu ${qIndex}:</strong> ${item}
+                <div class="essay-lines-area">
+                  <div>Bài làm: ...................................................................................................................................................................................</div>
+                  <div>.....................................................................................................................................................................................................</div>
+                  <div>.....................................................................................................................................................................................................</div>
+                </div>
+              </div>
+            `;
+            qIndex++;
+          });
+        }
+
+        contentHtml += `</div>`;
+        return contentHtml;
+      }
+
+      const html = `
+        <div class="sheet-head">
+          <div>
+            <strong>Trường Tiểu học:</strong> ....................................<br>
+            <strong>Lớp:</strong> ${grade}... &bull; <strong>Bộ sách:</strong> Kết nối tri thức với cuộc sống
+          </div>
+          <div style="text-align: right;">
+            <strong>Họ và tên học sinh:</strong> ....................................<br>
+            <strong>Ngày:</strong> ...... / ...... / 202... &bull; <strong>Điểm/Nhận xét:</strong> ........
+          </div>
+        </div>
+
+        <div class="sheet-title-block">
+          <div class="sheet-main-title">PHIẾU HỌC TẬP ĐÁNH GIÁ 3 MỨC ĐỘ (THÔNG TƯ 27)</div>
+          <div style="font-size: 1.15rem; font-weight: 700; color: #1e293b; margin-top: 4px;">MÔN: ${subject.toUpperCase()} ${grade} &bull; BÀI: ${lesson.toUpperCase()}</div>
+          <div class="sheet-subtitle">Yêu cầu cần đạt: ${goals}</div>
+          ${notes ? `<div style="font-size: 0.9rem; color: #64748b; margin-top: 2px;">Lưu ý của giáo viên: ${notes}</div>` : ''}
+        </div>
+
+        <!-- Mức 1 -->
+        ${renderLevelQuestions(data.m1, '🌱 PHẦN 1: MỨC 1 – NHẬN BIẾT & NHẮC LẠI KIẾN THỨC', '', 'Mức 1')}
+
+        <!-- Mức 2 -->
+        ${renderLevelQuestions(data.m2, '🌿 PHẦN 2: MỨC 2 – KẾT NỐI, SẮP XẾP & GIẢI QUYẾT VẤN ĐỀ TƯƠNG TỰ', 'm2', 'Mức 2')}
+
+        <!-- Mức 3 -->
+        ${renderLevelQuestions(data.m3, '🌳 PHẦN 3: MỨC 3 – VẬN DỤNG GIẢI QUYẾT VẤN ĐỀ MỚI & THỰC TẾ', 'm3', 'Mức 3')}
+
+        <!-- Hướng dẫn chấm & Đáp án -->
+        <div class="sheet-answers-box">
+          <strong style="color: #166534; font-size: 1.05rem;">🎯 HƯỚNG DẪN CHẤM & ĐÁP ÁN THAM KHẢO (THEO THÔNG TƯ 27):</strong>
+          <ul style="margin-left: 20px; margin-top: 6px; font-size: 0.95rem;">
+            ${(data.answers || []).map(ans => `<li style="margin-bottom: 4px;">${ans}</li>`).join('')}
+          </ul>
+        </div>
+
+        <!-- Lỗi sai học sinh thường mắc phải -->
+        <div class="sheet-mistakes-box">
+          <strong style="color: #92400e; font-size: 1.05rem;">⚠️ CÁC LỖI HỌC SINH THƯỜNG MẮC PHẢI CÔ CẦN LƯU Ý KHI CHẤM BÀI:</strong>
+          <ul style="margin-left: 20px; margin-top: 6px; font-size: 0.95rem;">
+            ${(data.mistakes || []).map(m => `<li style="margin-bottom: 4px;">${m}</li>`).join('')}
+          </ul>
+        </div>
+      `;
+
+      const previewContainer = document.getElementById('worksheet-preview');
+      const resultBox = document.getElementById('result-box-1');
+      if (previewContainer && resultBox) {
+        previewContainer.innerHTML = html;
+        resultBox.style.display = 'block';
+        resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        showToast('Đã tạo phiếu bài tập 3 mức thành công!');
+      }
+    }
+
+    /* Xuất phiếu bài tập ra file Word (.doc) giữ nguyên định dạng và dòng kẻ */
+    function downloadWorksheetDoc() {
+      const sheet = document.getElementById('worksheet-preview');
+      if (!sheet || !sheet.innerHTML.trim()) {
+        showToast('Chưa có nội dung phiếu để tải về!');
+        return;
+      }
+
+      const lesson = document.getElementById('ws-lesson').value.trim() || 'Bai_hoc';
+      const grade = document.getElementById('ws-grade').value;
+      const subject = document.getElementById('ws-subject').value;
+
+      const docHtml = `
+        <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+        <head>
+          <meta charset='utf-8'>
+          <title>Phiếu bài tập</title>
+          <style>
+            body {
+              font-family: 'Times New Roman', serif;
+              font-size: 13pt;
+              line-height: 1.45;
+              color: #000;
+              margin: 20mm;
+            }
+            .sheet-head {
+              width: 100%;
+              border-bottom: 2pt solid #000;
+              padding-bottom: 8pt;
+              margin-bottom: 14pt;
+            }
+            .sheet-title-block {
+              text-align: center;
+              margin-bottom: 16pt;
+            }
+            .sheet-main-title {
+              font-size: 16pt;
+              font-weight: bold;
+              text-transform: uppercase;
+            }
+            .level-section {
+              margin-bottom: 16pt;
+              padding: 6pt;
+            }
+            .level-title {
+              font-weight: bold;
+              font-size: 13pt;
+              margin-bottom: 8pt;
+              text-decoration: underline;
+            }
+            .subsection-badge {
+              font-weight: bold;
+              font-size: 12pt;
+              margin-top: 8pt;
+              margin-bottom: 4pt;
+            }
+            .mcq-question {
+              margin-bottom: 10pt;
+            }
+            .mcq-options {
+              margin-left: 25pt;
+              margin-top: 4pt;
+            }
+            .mcq-option-line {
+              margin-bottom: 3pt;
+            }
+            .essay-question {
+              margin-bottom: 12pt;
+            }
+            .essay-lines-area {
+              margin-top: 6pt;
+              margin-bottom: 8pt;
+              color: #666;
+            }
+            .sheet-answers-box {
+              margin-top: 18pt;
+              padding: 8pt;
+              border: 1pt solid #444;
+            }
+            .sheet-mistakes-box {
+              margin-top: 10pt;
+              padding: 8pt;
+              border: 1pt solid #888;
+            }
+          </style>
+        </head>
+        <body>
+          ${sheet.innerHTML}
+        </body>
+        </html>
+      `;
+
+      const blob = new Blob(['\ufeff', docHtml], { type: 'application/msword;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const cleanFileName = `Phieu_${subject}_Lop_${grade}_${lesson.replace(/[^a-zA-Z0-9À-ỹ]/g, '_')}.doc`;
+
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = cleanFileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      showToast('Đang tải phiếu bài tập (.doc) về máy tính của cô!');
+    }
+
+    /* Sao chép văn bản phiếu bài tập */
+    function copyWorksheetText() {
+      const sheet = document.getElementById('worksheet-preview');
+      if (!sheet) return;
+      fallbackCopyText(sheet.innerText, 'Đã sao chép phiếu bài tập! Cô có thể dán (Ctrl+V) vào Word.');
+    }
+
+    /* Ngân hàng 10 lời nhận xét phong phú cho từng môn học và mức đạt */
+    const SUBJECT_FEEDBACK_BANK = {
+      "Tin học": {
+        "Hoàn thành tốt": [
+          "thao tác trên máy tính thành thạo, gõ bàn phím 10 ngón đúng tư thế và vẽ tranh/soạn thảo văn bản rất khéo léo. Cô khen ngợi sự chủ động hỗ trợ bạn bè trong giờ thực hành của em!",
+          "nắm chắc kiến thức bài học Tin học, thực hành bài tập nhanh và chuẩn xác. Em có ý thức tuân thủ tuyệt đối nội quy phòng máy tính và bảo quản thiết bị rất cẩn thận.",
+          "sử dụng chuột và bàn phím rất linh hoạt, biết tạo và quản lý thư mục bài học rất khoa học, ngăn nắp. Chúc em tiếp tục nuôi dưỡng niềm đam mê công nghệ nhé!",
+          "hiểu rõ quy tắc an toàn thông tin khi dùng máy tính và Internet, luôn hoàn thành bài thực hành sớm và có nhiều ý tưởng sáng tạo trong các bài tập trải nghiệm.",
+          "có tư duy công nghệ nhanh nhạy, ghi nhớ các phím tắt rất nhanh và chủ động khám phá các tính năng hữu ích của phần mềm. Rất đáng biểu dương!",
+          "gõ phím đúng hàng phím cơ sở, tư thế ngồi học ngay ngắn chuẩn cự ly và rất nhiệt tình hướng dẫn bạn cùng bàn khi bạn gặp khó khăn.",
+          "trình bày sản phẩm trên máy tính rất thẩm mỹ, phông chữ và hình ảnh hài hòa; thao tác lưu tệp vào đúng thư mục quy định rất cẩn thận.",
+          "tiếp thu bài học rất nhanh, thực hiện thuần thục các thao tác sao chép, cắt dán văn bản và luôn tích cực xung phong lên máy chiếu làm mẫu cho cả lớp.",
+          "hiểu bản chất các bước giải quyết vấn đề bằng máy tính, nhanh nhẹn trong các bài thực hành và có tinh thần tự học rất cao.",
+          "hoàn thành xuất sắc mục tiêu môn Tin học, luôn là hạt nhân gương mẫu, năng nổ và sáng tạo trong mọi tiết học tại phòng máy tính."
+        ],
+        "Hoàn thành": [
+          "thực hiện được các thao tác cơ bản theo hướng dẫn của cô. Em cần chú ý rèn thêm kỹ năng cầm chuột và luyện gõ phím nhanh hơn nhé.",
+          "hoàn thành các bài tập thực hành trên máy. Em hãy chú ý ghi nhớ các tổ hợp phím tắt thông dụng để thao tác thêm thuận tiện và nhanh gọn.",
+          "biết cách bật tắt máy đúng quy trình và mở được phần mềm học tập. Em cần chú ý đặt ngón tay đúng hàng phím cơ sở khi gõ bài.",
+          "nắm được quy tắc gõ chữ tiếng Việt trên máy tính. Em nên luyện gõ thường xuyên hơn để tăng tốc độ gõ bài và hạn chế lỗi chính tả.",
+          "thực hiện được các bước vẽ hình và tô màu cơ bản. Em hãy cẩn thận hơn khi chọn công cụ và căn chỉnh kích thước hình vẽ nhé.",
+          "hoàn thành bài thực hành trong giờ học. Em cần chú ý lắng nghe kỹ hướng dẫn lưu bài vào đúng thư mục để tránh bị thất lạc tệp tin.",
+          "biết cách sử dụng các công cụ cơ bản trong phần mềm soạn thảo. Em hãy chú ý căn lề và chọn cỡ chữ phù hợp cho bài viết của mình.",
+          "chấp hành tốt nội quy phòng máy tính. Em hãy chủ động hơn trong việc giơ tay hỏi cô hoặc nhờ bạn hỗ trợ khi gặp thao tác khó.",
+          "tiếp thu bài tốt, hoàn thành nhiệm vụ được giao. Em nên dành thêm thời gian luyện tập gõ 10 ngón trên các phần mềm trò chơi học tập.",
+          "thực hiện được các thao tác tìm kiếm thông tin cơ bản. Em hãy rèn thêm tính cẩn thận khi nhấn các nút lệnh để tránh xóa nhầm nội dung."
+        ],
+        "Chưa hoàn thành": [
+          "còn lúng túng khi cầm chuột và thao tác lưu bài trên máy tính. Em cần chú ý quan sát cô làm mẫu và mạnh dạn nhờ cô hỗ trợ trong giờ thực hành nhé!",
+          "cầm chuột chưa đúng cách và hay bấm nhầm phím trên bàn phím. Em hãy thả lỏng bàn tay và thực hiện từng thao tác thật chậm rãi nhé.",
+          "chưa nhớ các bước khởi động và thoát phần mềm đúng quy trình. Em cần chú ý lắng nghe và làm theo từng bước cô hướng dẫn trên bảng.",
+          "tốc độ gõ phím còn rất chậm, hay gõ bằng 1 ngón tay và chưa tìm thấy vị trí các chữ cái. Em hãy kiên trì luyện tập theo hàng phím cơ sở nhé.",
+          "còn hay quên tên thư mục lưu bài và làm mất sản phẩm vừa tạo. Em hãy tập thói quen lưu bài ngay từ khi bắt đầu làm bài tập nhé.",
+          "dễ mất tập trung và bấm nhầm vào các nút cài đặt của máy tính. Em cần tuân thủ nghiêm túc nội dung bài học và sự hướng dẫn của cô.",
+          "chưa tự tin khi ngồi trước máy tính và còn sợ làm hỏng thiết bị. Đừng lo lắng em nhé, cô và các bạn luôn ở bên cạnh để giúp đỡ em!",
+          "còn nhầm lẫn giữa nhấp chuột trái và nhấp chuột phải. Em hãy luyện tập thêm các trò chơi luyện chuột đơn giản để tay thêm linh hoạt.",
+          "chưa hoàn thành được sản phẩm thực hành trong tiết học. Em cần chú ý nghe giảng phần lý thuyết để khi thực hành không bị bỡ ngỡ.",
+          "cần được cô và các bạn kèm cặp thêm trong các giờ thực hành phòng máy. Cô tin em sẽ thành thạo hơn sau vài buổi luyện tập tới!"
+        ]
+      },
+      "Toán": {
+        "Hoàn thành tốt": [
+          "tiếp thu bài rất nhanh, tính toán chuẩn xác và biết vận dụng linh hoạt vào các bài toán thực tế. Cô khen ngợi sự tích cực của em, em hãy tiếp tục phát huy và hướng dẫn thêm cho các bạn trong nhóm nhé!",
+          "nắm chắc kiến thức trọng tâm môn Toán, kỹ năng tính nhẩm nhanh và trình bày bài giải rất khoa học, sạch đẹp. Em hãy duy trì phong độ và thử sức thêm với các bài toán đố tư duy!",
+          "có tư duy toán học logic, lập luận chặt chẽ và luôn hoàn thành xuất sắc các bài tập trên lớp. Cô rất tự hào về tinh thần tự giác và ham học hỏi của em!",
+          "tính toán nhanh nhẹn, hiểu sâu bản chất phép tính và luôn chủ động xung phong giải bài khó trên bảng. Em hãy tiếp tục giữ vững niềm yêu thích đối với môn Toán nhé!",
+          "hoàn thành xuất sắc nhiệm vụ học tập môn Toán, thao tác chuẩn xác, chữ số rõ ràng. Em có khả năng liên hệ kiến thức toán học với các tình huống đời sống rất tốt.",
+          "nắm vững quy tắc toán học, luôn cẩn thận khi kiểm tra lại kết quả và tích cực thảo luận nhóm. Chúc em tiếp tục gặt hái thêm nhiều kết quả tốt trong môn Toán!",
+          "có năng khiếu toán học nổi bật, biết tìm ra nhiều cách giải sáng tạo và trình bày bài giải mạch lạc, chặt chẽ. Em hãy tiếp tục thử sức với các bài toán nâng cao!",
+          "chăm chú lắng nghe, nắm bắt kiến thức mới rất nhanh và thực hiện thuần thục các phép tính. Em luôn là tấm gương tự giác học tập cho các bạn cùng bàn.",
+          "thao tác đặt tính chuẩn xác, hiểu rõ bản chất bài toán có lời văn và hoàn thành bài học trước thời gian quy định. Em hãy tiếp tục phát huy sự năng động này nhé!",
+          "tư duy nhanh nhạy, ghi nhớ bảng tính rất tốt và luôn cẩn thận đối chiếu kết quả trước khi nộp bài. Cô rất tin tưởng vào sự tiến bộ bền vững của em!"
+        ],
+        "Hoàn thành": [
+          "nắm được kiến thức cơ bản của bài học và hoàn thành các bài tập tính toán. Em cần chú ý rèn thêm tính cẩn thận khi đặt tính và đọc kỹ đề toán có lời văn để tránh sai sót đáng tiếc.",
+          "có nhiều cố gắng trong giờ học Toán, hoàn thành tốt các bài tập quen thuộc. Em hãy luyện tập thêm kỹ năng tính nhẩm hàng ngày để thao tác giải toán nhanh hơn nữa nhé!",
+          "tiếp thu được nội dung bài giảng và làm được các phép tính cơ bản. Em nên chú ý trình bày bài giải cẩn thận hơn và tự tin giơ tay phát biểu ý kiến trước lớp.",
+          "đạt yêu cầu cần đạt của môn Toán, có ý thức hoàn thành nhiệm vụ được giao. Em cần rèn thêm kỹ năng phân tích bài toán thực tế để lời giải được đầy đủ và chính xác hơn.",
+          "hiểu bài và thực hiện được các phép tính theo yêu cầu. Em hãy dành thêm chút thời gian rèn chữ số và kiểm tra lại kết quả bài làm trước khi nộp bài cho cô nhé!",
+          "nắm được quy trình giải toán và hoàn thành bài tập đầy đủ. Em cần chú ý tập trung hơn ở khâu tính toán nháp để hạn chế nhầm lẫn những phép cộng trừ đơn giản.",
+          "có ý thức học tập tốt, tiếp thu được kiến thức nền tảng. Em hãy dành thêm 10 phút mỗi tối để ôn lại bảng nhân, bảng chia để giải toán thêm nhanh nhẹn.",
+          "thực hiện được các bài tập mức độ cơ bản. Em cần rèn luyện thêm kỹ năng đọc hiểu câu chữ trong đề toán để xác định đúng phép tính cần thực hiện.",
+          "hoàn thành các yêu cầu của tiết học Toán. Em chú ý viết chữ số rõ ràng, giữ vở sạch đẹp hơn và mạnh dạn hỏi cô khi gặp dạng bài chưa quen nhé!",
+          "có tiến bộ trong kỹ năng tính toán, biết lắng nghe cô giảng bài. Em hãy tự tin hơn khi tham gia hoạt động nhóm và chủ động chia sẻ cách làm của mình."
+        ],
+        "Chưa hoàn thành": [
+          "đã có cố gắng khi làm bài nhưng còn lúng túng ở kỹ năng tính toán và bảng tính cơ bản. Mỗi ngày em hãy dành thêm 15 phút ôn lại các phép tính và mạnh dạn hỏi cô khi chưa hiểu, cô luôn đồng hành cùng em!",
+          "còn gặp khó khăn khi giải bài toán có lời văn và thực hiện các phép tính nhiều bước. Em cần được thầy cô và phụ huynh kèm cặp thêm các bài tập nền tảng tại nhà.",
+          "còn thao tác tính toán chậm và dễ nhầm lẫn các bước thực hiện. Em hãy chú ý lắng nghe cô hướng dẫn trên lớp và chịu khó luyện tập thêm để tiến bộ từng ngày nhé!",
+          "chưa ghi nhớ vững bảng cộng trừ hoặc nhân chia, dẫn đến tốc độ làm bài còn chậm. Em hãy kiên trì ôn luyện bảng tính mỗi ngày cùng bố mẹ nhé!",
+          "còn nhầm lẫn khi đặt tính thẳng cột và thực hiện phép tính có nhớ. Em hãy làm từng bước thật chậm và nhờ cô kiểm tra giúp ngay tại lớp nhé!",
+          "còn lúng túng khi đọc đề bài toán có lời văn, chưa xác định rõ đề bài cho gì và hỏi gì. Em hãy tập gạch chân dưới các số liệu quan trọng khi đọc đề nhé!",
+          "đôi lúc còn thiếu tập trung trong giờ học dẫn đến chưa nắm chắc quy tắc tính. Em cố gắng chú ý nghe giảng và tích cực giơ tay hơn trong các tiết học tới!",
+          "cần rèn thêm kỹ năng tính nháp và viết chữ số rõ nét để tránh nhìn nhầm số liệu của chính mình. Cô tin em sẽ tiến bộ nếu kiên trì luyện tập đều đặn!",
+          "chưa tự tin khi làm bài kiểm tra và còn phụ thuộc vào gợi ý của cô. Em hãy mạnh dạn tự làm từ các câu dễ trước và tin tưởng vào khả năng của mình nhé!",
+          "tốc độ tiếp thu bài còn chậm, cần thêm thời gian để hoàn thành bài tập trên lớp. Thầy cô và gia đình sẽ luôn đồng hành hỗ trợ để em nắm chắc bài hơn."
+        ]
+      },
+      "Tiếng Việt": {
+        "Hoàn thành tốt": [
+          "đọc to, rõ ràng, ngắt nghỉ đúng ngữ điệu và diễn đạt câu văn rất giàu cảm xúc. Chữ viết của em nắn nót, đúng chính tả. Em hãy tiếp tục phát huy năng khiếu văn học này nhé!",
+          "có vốn từ phong phú, trả lời câu hỏi đọc hiểu sâu sắc và biết dùng từ gợi tả, gợi cảm khi viết đoạn văn. Cô rất khen ngợi tinh thần say mê đọc sách của em!",
+          "nắm chắc quy tắc chính tả, dùng từ đặt câu gãy gọn và giàu hình ảnh. Em thể hiện sự tự tin và diễn đạt mạch lạc trong các hoạt động luyện nói.",
+          "đọc diễn cảm rất hay, nắm bắt nội dung bài đọc nhanh và sáng tạo trong các bài tập viết ngắn. Em hãy tiếp tục duy trì niềm yêu thích với môn Tiếng Việt nhé!",
+          "hoàn thành xuất sắc các bài tập chính tả và luyện từ và câu. Vở ghi của em luôn sạch đẹp, chữ viết ngay ngắn và câu văn rất trong sáng.",
+          "có giọng đọc truyền cảm, biết nhấn giọng ở những từ ngữ giàu hình ảnh và trả lời câu hỏi đọc hiểu rất thông minh. Thật đáng khen ngợi!",
+          "biết sử dụng linh hoạt các biện pháp so sánh, nhân hóa giúp câu văn thêm sinh động, hấp dẫn. Em hãy tiếp tục đọc thêm nhiều sách hay nhé!",
+          "viết đúng quy tắc chính tả, khoảng cách các con chữ đều đặn, bài viết sạch sẽ. Em có khả năng diễn đạt lưu loát cả trong nói và viết.",
+          "nắm vững kiến thức ngữ pháp, biết liên kết các câu văn chặt chẽ và chọn lọc từ ngữ chính xác. Cô rất tự hào về tinh thần tự học của em!",
+          "thể hiện cảm xúc chân thành, tự nhiên trong từng bài viết; kỹ năng lắng nghe và tương tác trong giờ học rất tốt. Chúc em ngày càng yêu thích môn học này!"
+        ],
+        "Hoàn thành": [
+          "đọc bài to rõ ràng và hiểu được nội dung cơ bản của bài đọc. Em cần chú ý rèn thêm chữ viết cho đúng độ cao và đọc ngắt nghỉ đúng dấu câu hơn.",
+          "hoàn thành yêu cầu bài học, trả lời được các câu hỏi đọc hiểu. Em hãy mở rộng vốn từ bằng cách đọc thêm sách truyện thiếu nhi và chú ý viết hoa đầu câu đúng quy định.",
+          "có tiến bộ trong kỹ năng viết chính tả, nắm được nội dung bài học. Em cần rèn luyện thêm kỹ năng diễn đạt câu văn cho mạch lạc và tránh lặp từ khi viết đoạn văn.",
+          "đọc lưu loát, hoàn thành các bài tập Tiếng Việt trên lớp. Em nên chú ý rèn tính cẩn thận để hạn chế viết sai các phụ âm đầu hoặc dấu thanh dễ nhầm lẫn.",
+          "hiểu nội dung bài đọc và trả lời được các câu hỏi mức nhận biết. Em nên chú ý rèn nét chữ tròn đều hơn và trau chuốt câu văn trả lời cho tròn ý.",
+          "đọc đúng tốc độ quy định, trả lời được ý chính của bài. Em hãy dành thêm thời gian đọc sách để tích lũy thêm nhiều từ ngữ hay cho bài viết của mình.",
+          "nắm được quy tắc ngữ pháp cơ bản, làm đúng bài tập chính tả. Em cần rèn thêm kỹ năng diễn đạt câu văn sao cho mạch lạc, tránh dùng từ lặp lại nhiều lần.",
+          "có ý thức rèn chữ giữ vở, hoàn thành bài tập trên lớp. Em hãy tự tin giơ tay phát biểu nhiều hơn để rèn luyện kỹ năng nói trước đám đông nhé!",
+          "hoàn thành các bài tập luyện từ và câu. Em cần chú ý đặt dấu chấm, dấu phẩy đúng vị trí để câu văn được rõ ràng và mạch lạc hơn.",
+          "tiếp thu bài tốt, đọc bài trôi chảy. Em cần chú ý đọc thong thả hơn ở những câu dài và rèn thêm độ đều của nét chữ khi viết đoạn văn."
+        ],
+        "Chưa hoàn thành": [
+          "còn đọc ngắc ngứ và dễ mắc lỗi chính tả khi viết bài. Mỗi ngày em hãy dành thời gian đọc to 1 đoạn truyện ngắn và rèn viết lại các từ khó, cô tin em sẽ tiến bộ rõ rệt!",
+          "còn lúng túng khi trả lời câu hỏi đọc hiểu và vốn từ còn hạn chế. Em cần được thầy cô và gia đình hỗ trợ rèn kỹ năng ghép âm vần và viết câu đầy đủ chủ ngữ, vị ngữ.",
+          "tốc độ đọc và viết còn chậm so với yêu cầu bài học. Em hãy kiên trì rèn luyện viết chữ mỗi ngày và mạnh dạn nhờ cô hướng dẫn thêm nhé!",
+          "còn phát âm nhầm lẫn giữa một số âm đầu và dấu thanh dẫn đến viết sai chính tả. Em hãy chú ý lắng nghe cô phát âm mẫu và luyện đọc lại hàng ngày.",
+          "câu văn khi viết đoạn còn cụt ngủn, thiếu bộ phận vị ngữ hoặc dấu kết thúc câu. Em hãy tập thói quen đọc lại câu văn sau khi viết để tự sửa lỗi nhé!",
+          "chưa nắm chắc nội dung bài đọc, còn rụt rè khi trả lời câu hỏi của cô. Em hãy đọc bài trước ở nhà và mạnh dạn chia sẻ suy nghĩ của mình trên lớp nhé!",
+          "chữ viết còn chưa đúng kích cỡ, khoảng cách giữa các chữ chưa đều và còn tẩy xóa. Em hãy rèn viết chậm lại, nắn nót từng nét chữ trên vở ô li.",
+          "còn nhầm lẫn khi phân loại từ chỉ sự vật, hoạt động và đặc điểm. Em cần chú ý nghe cô hướng dẫn và làm thêm bài tập củng cố tại lớp.",
+          "tốc độ viết chính tả còn chậm, chưa theo kịp tốc độ đọc của lớp. Gia đình và cô sẽ phối hợp kèm cặp thêm để giúp em bắt nhịp tốt hơn.",
+          "còn ngại nói trước lớp và chưa diễn đạt được trọn vẹn ý nghĩ. Em hãy tự tin luyện nói từng câu ngắn với bạn bè và cô giáo mỗi ngày nhé!"
+        ]
+      }
+    };
+
+    function addStudentRow(code = '', level = 'Hoàn thành tốt') {
+      const tbody = document.getElementById('student-list-body');
+      if (!tbody) return;
+      const rowCount = tbody.children.length;
+
+      if (rowCount >= 20) {
+        showToast('Mỗi đợt tạo tối đa 20 học sinh để nhận xét phong phú nhất cô nhé!');
+        return;
+      }
+
+      const defaultCode = code || `HS${String(rowCount + 1).padStart(2, '0')}`;
+      const tr = document.createElement('tr');
+
+      tr.innerHTML = `
+        <td>
+          <input type="text" class="student-code-input" value="${defaultCode}" placeholder="HS01" oninput="validateStudentCode(this)" style="max-width: 150px;">
+          <div class="error-tag">Dùng mã ngắn, không dùng tên thật</div>
+        </td>
+        <td>
+          <select class="student-level-select">
+            <option value="Hoàn thành tốt" ${level === 'Hoàn thành tốt' ? 'selected' : ''}>🌟 Hoàn thành tốt (Nắm chắc bài, vận dụng sáng tạo)</option>
+            <option value="Hoàn thành" ${level === 'Hoàn thành' ? 'selected' : ''}>🌱 Hoàn thành (Đạt chuẩn kiến thức, kỹ năng)</option>
+            <option value="Chưa hoàn thành" ${level === 'Chưa hoàn thành' ? 'selected' : ''}>🤝 Chưa hoàn thành (Cần thầy cô và gia đình hỗ trợ thêm)</option>
+          </select>
+        </td>
+        <td style="text-align: center;">
+          <button type="button" class="btn-danger-outline" onclick="removeStudentRow(this)">Xóa</button>
+        </td>
+      `;
+
+      tbody.appendChild(tr);
+      validateStudentCode(tr.querySelector('.student-code-input'));
+    }
+
+    function removeStudentRow(btn) {
+      const tbody = document.getElementById('student-list-body');
+      if (!tbody) return;
+      if (tbody.children.length <= 1) {
+        showToast('Cần giữ lại ít nhất 1 dòng học sinh!');
+        return;
+      }
+      btn.closest('tr').remove();
+    }
+
+    function validateStudentCode(inputEl) {
+      if (!inputEl) return true;
+      const val = inputEl.value;
+      const errTag = inputEl.nextElementSibling;
+      const hasSpace = /\s/.test(val);
+      const isTooLong = val.length > 8;
+
+      if (isTooLong || hasSpace) {
+        if (errTag) errTag.classList.add('active');
+        inputEl.style.borderColor = 'var(--danger-color)';
+        return false;
+      } else {
+        if (errTag) errTag.classList.remove('active');
+        inputEl.style.borderColor = 'var(--border-color)';
+        return true;
+      }
+    }
+
+    function generateDistinctFeedbacks(studentList, subject, grade, tone) {
+      const subjectPool = SUBJECT_FEEDBACK_BANK[subject] || SUBJECT_FEEDBACK_BANK["Tin học"] || SUBJECT_FEEDBACK_BANK["Toán"];
+      
+      const usedIndices = {
+        "Hoàn thành tốt": 0,
+        "Hoàn thành": 0,
+        "Chưa hoàn thành": 0
+      };
+
+      return studentList.map((st) => {
+        const pool = subjectPool[st.level] || subjectPool["Hoàn thành tốt"];
+        const currentIndex = usedIndices[st.level] % pool.length;
+        usedIndices[st.level] = usedIndices[st.level] + 1;
+
+        let content = pool[currentIndex];
+        let fullFeedback = "";
+
+        if (tone === "Ấm áp") {
+          fullFeedback = `Em ${st.code} ${content}`;
+        } else if (tone === "Ngắn gọn") {
+          const shortContent = content.split('.')[0] + '.';
+          fullFeedback = `Em ${st.code}: ${st.level}. ${shortContent}`;
+        } else {
+          fullFeedback = `Học sinh ${st.code} (${subject}): Đạt mức ${st.level}. ${content}`;
+        }
+
+        return {
+          code: st.code,
+          level: st.level,
+          feedback: fullFeedback,
+          poolIndex: currentIndex
+        };
+      });
+    }
+
+    function cycleStudentFeedback(cardIndex, code, level) {
+      const subject = document.getElementById('fb-subject').value;
+      const tone = document.getElementById('fb-tone').value;
+      const subjectPool = SUBJECT_FEEDBACK_BANK[subject] || SUBJECT_FEEDBACK_BANK["Tin học"] || SUBJECT_FEEDBACK_BANK["Toán"];
+      const pool = subjectPool[level] || subjectPool["Hoàn thành tốt"];
+
+      const textarea = document.getElementById(`fb-text-${cardIndex}`);
+      if (!textarea) return;
+
+      const randomIdx = Math.floor(Math.random() * pool.length);
+      const content = pool[randomIdx];
+
+      let newFeedback = "";
+      if (tone === "Ấm áp") {
+        newFeedback = `Em ${code} ${content}`;
+      } else if (tone === "Ngắn gọn") {
+        const shortContent = content.split('.')[0] + '.';
+        newFeedback = `Em ${code}: ${level}. ${shortContent}`;
+      } else {
+        newFeedback = `Học sinh ${code} (${subject}): Đạt mức ${level}. ${content}`;
+      }
+
+      textarea.value = newFeedback;
+      showToast(`Đã đổi lời nhận xét mới cho em ${code}!`);
+    }
+
+    function renderFeedbacksDirectly() {
+      const grade = document.getElementById('fb-grade').value;
+      const subject = document.getElementById('fb-subject').value;
+      const tone = document.getElementById('fb-tone').value;
+
+      const rows = document.querySelectorAll('#student-list-body tr');
+      let valid = true;
+      let studentList = [];
+
+      rows.forEach(row => {
+        const codeInput = row.querySelector('.student-code-input');
+        const levelSelect = row.querySelector('.student-level-select');
+
+        if (codeInput && levelSelect) {
+          const code = codeInput.value.trim();
+          const level = levelSelect.value;
+
+          if (!validateStudentCode(codeInput)) {
+            valid = false;
+          }
+
+          if (code) {
+            studentList.push({ code, level });
+          }
+        }
+      });
+
+      if (!valid) {
+        showToast('Có mã học sinh chưa đúng quy định (quá 8 ký tự hoặc có dấu cách)!');
+        return;
+      }
+
+      if (studentList.length === 0) {
+        showToast('Cô vui lòng nhập ít nhất một học sinh nhé!');
+        return;
+      }
+
+      const container = document.getElementById('feedback-list-container');
+      const resultBox = document.getElementById('result-box-2');
+      if (!container || !resultBox) return;
+
+      container.innerHTML = '';
+      const generatedList = generateDistinctFeedbacks(studentList, subject, grade, tone);
+
+      generatedList.forEach((st, idx) => {
+        let badgeClass = 'level-good';
+        if (st.level === 'Hoàn thành') badgeClass = 'level-pass';
+        if (st.level === 'Chưa hoàn thành') badgeClass = 'level-support';
+
+        const card = document.createElement('div');
+        card.className = 'feedback-card';
+        card.innerHTML = `
+          <div class="feedback-card-header">
+            <div>
+              <span class="student-badge">${st.code}</span>
+              <span class="level-badge ${badgeClass}" style="margin-left: 6px;">${st.level}</span>
+            </div>
+            <span style="font-size: 0.88rem; color: #64748b; font-weight: 600;">📖 ${subject} (Lớp ${grade}) &bull; Giọng: ${tone}</span>
+          </div>
+          <textarea class="feedback-text-area" id="fb-text-${idx}">${st.feedback}</textarea>
+          <div class="feedback-card-actions">
+            <button type="button" class="btn btn-secondary" style="min-height: 36px; padding: 6px 12px; font-size: 0.9rem;" onclick="cycleStudentFeedback(${idx}, '${st.code}', '${st.level}')">🔄 Đổi mẫu khác</button>
+            <button type="button" class="btn btn-green" style="min-height: 36px; padding: 6px 14px; font-size: 0.9rem;" onclick="copySingleFeedback('fb-text-${idx}')">📋 Sao chép</button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      resultBox.style.display = 'block';
+      resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      showToast(`Đã tạo xong ${studentList.length} lời nhận xét môn ${subject}!`);
+    }
+
+    function copySingleFeedback(textareaId) {
+      const el = document.getElementById(textareaId);
+      if (!el) return;
+      fallbackCopyText(el.value, 'Đã sao chép lời nhận xét của học sinh!');
+    }
+
+    function copyAllFeedbacks() {
+      const textareas = document.querySelectorAll('.feedback-text-area');
+      if (textareas.length === 0) return;
+
+      let allText = [];
+      textareas.forEach(t => {
+        allText.push(t.value.trim());
+      });
+
+      fallbackCopyText(allText.join('\n\n'), 'Đã sao chép toàn bộ nhận xét vào bộ nhớ tạm!');
+    }
+
+    /* Tải danh sách lời nhận xét ra file Excel (.xls) có đầy đủ các cột */
+    function downloadFeedbacksExcel() {
+      const grade = document.getElementById('fb-grade').value;
+      const subject = document.getElementById('fb-subject').value;
+      const cards = document.querySelectorAll('#feedback-list-container .feedback-card');
+
+      if (cards.length === 0) {
+        showToast('Chưa có danh sách nhận xét để tải xuống!');
+        return;
+      }
+
+      let tableRows = '';
+      cards.forEach((card, index) => {
+        const studentCode = card.querySelector('.student-badge')?.innerText.trim() || `HS${index + 1}`;
+        const studentLevel = card.querySelector('.level-badge')?.innerText.trim() || '';
+        const textarea = card.querySelector('.feedback-text-area');
+        const feedbackText = textarea ? textarea.value.trim() : '';
+
+        const safeFeedback = feedbackText
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+
+        tableRows += `
+          <tr>
+            <td style="text-align: center; border: 1px solid #cbd5e1; padding: 8px;">${index + 1}</td>
+            <td style="text-align: center; border: 1px solid #cbd5e1; padding: 8px; font-weight: bold; color: #1e6091;">${studentCode}</td>
+            <td style="text-align: center; border: 1px solid #cbd5e1; padding: 8px;">${studentLevel}</td>
+            <td style="text-align: left; border: 1px solid #cbd5e1; padding: 8px; mso-number-format:'\\@';">${safeFeedback}</td>
+          </tr>
+        `;
+      });
+
+      const excelHtml = `
+        <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+        <head>
+          <meta charset="utf-8">
+          <style>
+            body { font-family: 'Times New Roman', Arial, sans-serif; }
+            th { background-color: #1e6091; color: #ffffff; font-weight: bold; border: 1px solid #0f3d5e; padding: 10px; font-size: 11pt; }
+            td { font-size: 11pt; }
+          </style>
+        </head>
+        <body>
+          <h2 style="text-align: center; color: #1e6091; margin-bottom: 4px;">BẢNG TỔNG HỢP NHẬN XÉT HỌC SINH THEO THÔNG TƯ 27/2020/TT-BGDĐT</h2>
+          <p style="text-align: center; font-size: 11pt; margin-top: 0; margin-bottom: 14px;">
+            <b>Môn học / Mảng nhận xét:</b> ${subject} &nbsp;|&nbsp; <b>Khối lớp:</b> Lớp ${grade} &nbsp;|&nbsp; <b>Bộ sách:</b> Kết nối tri thức với cuộc sống
+          </p>
+          <table border="1" style="border-collapse: collapse; width: 100%;">
+            <thead>
+              <tr>
+                <th style="width: 50px;">STT</th>
+                <th style="width: 120px;">Học sinh (Mã số)</th>
+                <th style="width: 160px;">Mức đạt được</th>
+                <th>Lời nhận xét của học sinh</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${tableRows}
+            </tbody>
+          </table>
+        </body>
+        </html>
+      `;
+
+      const blob = new Blob(['\ufeff', excelHtml], { type: 'application/vnd.ms-excel;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const cleanSubject = subject.replace(/[^a-zA-Z0-9À-ỹ]/g, '_');
+      const fileName = `Nhan_xet_${cleanSubject}_Lop_${grade}.xls`;
+
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      showToast('Đang tải file Excel nhận xét học sinh về máy tính!');
+    }
+
+    function fallbackCopyText(text, successMessage) {
+      const dummy = document.createElement("textarea");
+      dummy.style.position = 'fixed';
+      dummy.style.opacity = '0';
+      document.body.appendChild(dummy);
+      dummy.value = text;
+      dummy.select();
+      try {
+        document.execCommand("copy");
+        showToast(successMessage || 'Đã sao chép thành công!');
+      } catch (err) {
+        showToast('Vui lòng chọn văn bản và nhấn Ctrl+C để sao chép!');
+      }
+      document.body.removeChild(dummy);
+    }
+
+    /* Khởi tạo dữ liệu khi tải xong trang */
+    window.addEventListener('DOMContentLoaded', () => {
+      updateTotalCounts();
+      handleGradeOrSubjectChange(); // Nạp sẵn danh mục bài học SGK Kết nối tri thức
+      addStudentRow('HS01', 'Hoàn thành tốt');
+      addStudentRow('HS02', 'Hoàn thành tốt');
+      addStudentRow('HS03', 'Hoàn thành');
+      addStudentRow('HS04', 'Chưa hoàn thành');
+    });
+  </script>
+</body>
+</html>
